@@ -1,0 +1,36 @@
+# Entornos y cachés
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.cache/
+runs/
+
+# Secretos y configuración local
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Datos crudos y artefactos pesados (reproducibles con scripts/)
+data/raw/
+data/processed/
+data/indexes/
+*.faiss
+*.npy
+*.npz
+*.sqlite
+*.db
+
+# Reportes temporales
+reports/tmp/
+reports/*.log
+
+# Salidas de sistema
+.DS_Store
+Thumbs.db
+*.log
+*.tmp

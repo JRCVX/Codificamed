@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codificamed"
+version = "0.1.0"
+description = "Prototipo de codificación automática CIE-10 de notas clínicas en español"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = { text = "MIT" }
+authors = [{ name = "CodificaMed contributors" }]
+keywords = ["nlp", "clinical", "icd10", "codiesp", "rag", "negation"]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[tool.setuptools]
+packages = [
+  "src",
+  "src.preprocess",
+  "src.catalog",
+  "src.retrieval",
+  "src.negation",
+  "src.ner",
+  "src.llm",
+  "src.pipeline",
+  "src.eval",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+  "network: requiere red (descargas, APIs, modelos); se omite con -m 'not network'",
+  "slow: prueba lenta; se puede omitir en desarrollo",
+]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [".venv", "data", "docs/figuras"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = true
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["*/__init__.py"]

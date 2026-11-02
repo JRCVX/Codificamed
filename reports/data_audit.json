@@ -1,0 +1,168 @@
+{
+  "project": "CodificaMed",
+  "generated_at": "2026-11-02T16:38:36.540331+00:00",
+  "sources": {
+    "catalog": "https://zenodo.org/records/3706838",
+    "corpus": "https://zenodo.org/records/3837305",
+    "license": "CC-BY-4.0"
+  },
+  "catalog": {
+    "rows": 98288,
+    "valid_code_rows": 98268,
+    "unique_codes": 98268,
+    "non_code_count": 20,
+    "non_code_sample": [
+      "CAP.02",
+      "CAP.03",
+      "CAP.04",
+      "CAP.05",
+      "CAP.06",
+      "CAP.07",
+      "CAP.08",
+      "CAP.09",
+      "CAP.10",
+      "CAP.11",
+      "CAP.12",
+      "CAP.13",
+      "CAP.14",
+      "CAP.15",
+      "CAP.16",
+      "CAP.17",
+      "CAP.18",
+      "CAP.19",
+      "CAP.20",
+      "CAP.21"
+    ],
+    "duplicate_codes": [],
+    "duplicate_count": 0,
+    "empty_description_count": 0,
+    "empty_description_sample": [],
+    "invalid_code_count": 0,
+    "invalid_code_sample": []
+  },
+  "splits": {
+    "train": {
+      "documents": 500,
+      "annotations": 5639,
+      "unique_codes": 1767,
+      "average_codes_per_document": 11.28,
+      "documents_without_codes": 0,
+      "codes_missing_from_catalog": 0,
+      "codes_missing_sample": [],
+      "x_diagnostic_rows": 7209,
+      "x_diagnostic_pairs": 5639,
+      "x_pair_coverage": 1.0,
+      "x_spans_checked": 8307,
+      "x_spans_nonempty": 8305,
+      "x_spans_nonempty_rate": 0.9998,
+      "x_zero_length_spans": 2,
+      "x_references_reconstructed": 7207,
+      "x_reference_reconstruction_rate": 0.9997,
+      "x_spans_exact_token": 6161,
+      "x_span_exact_token_rate": 0.7417,
+      "x_empty_references": 0,
+      "missing_text_documents": 0,
+      "missing_text_sample": [],
+      "span_mismatch_sample": [
+        {
+          "doc": "S0004-06142009000100010-1",
+          "code": "C64.2",
+          "start": 1320,
+          "end": 1320,
+          "error": "span fuera de rango o vacío"
+        },
+        {
+          "doc": "S0004-06142009000100010-1",
+          "code": "C64.2",
+          "error": "sin spans válidos para la referencia"
+        },
+        {
+          "doc": "S0365-66912007000700012-1",
+          "code": "H21.309",
+          "start": 1035,
+          "end": 1035,
+          "error": "span fuera de rango o vacío"
+        },
+        {
+          "doc": "S0365-66912007000700012-1",
+          "code": "H21.309",
+          "error": "sin spans válidos para la referencia"
+        }
+      ]
+    },
+    "dev": {
+      "documents": 250,
+      "annotations": 2677,
+      "unique_codes": 1158,
+      "average_codes_per_document": 10.71,
+      "documents_without_codes": 0,
+      "codes_missing_from_catalog": 0,
+      "codes_missing_sample": [],
+      "x_diagnostic_rows": 3431,
+      "x_diagnostic_pairs": 2677,
+      "x_pair_coverage": 1.0,
+      "x_spans_checked": 3961,
+      "x_spans_nonempty": 3960,
+      "x_spans_nonempty_rate": 0.9997,
+      "x_zero_length_spans": 1,
+      "x_references_reconstructed": 3430,
+      "x_reference_reconstruction_rate": 0.9997,
+      "x_spans_exact_token": 2922,
+      "x_span_exact_token_rate": 0.7377,
+      "x_empty_references": 0,
+      "missing_text_documents": 0,
+      "missing_text_sample": [],
+      "span_mismatch_sample": [
+        {
+          "doc": "S0210-56912007000900007-3",
+          "code": "K62.0",
+          "start": 1446,
+          "end": 1446,
+          "error": "span fuera de rango o vacío"
+        },
+        {
+          "doc": "S0210-56912007000900007-3",
+          "code": "K62.0",
+          "error": "sin spans válidos para la referencia"
+        }
+      ]
+    },
+    "test": {
+      "documents": 250,
+      "annotations": 2842,
+      "unique_codes": 1143,
+      "average_codes_per_document": 11.37,
+      "documents_without_codes": 0,
+      "codes_missing_from_catalog": 0,
+      "codes_missing_sample": [],
+      "x_diagnostic_rows": 3665,
+      "x_diagnostic_pairs": 2842,
+      "x_pair_coverage": 1.0,
+      "x_spans_checked": 4203,
+      "x_spans_nonempty": 4203,
+      "x_spans_nonempty_rate": 1.0,
+      "x_zero_length_spans": 0,
+      "x_references_reconstructed": 3665,
+      "x_reference_reconstruction_rate": 1.0,
+      "x_spans_exact_token": 3140,
+      "x_span_exact_token_rate": 0.7471,
+      "x_empty_references": 0,
+      "missing_text_documents": 0,
+      "missing_text_sample": [],
+      "span_mismatch_sample": []
+    }
+  },
+  "totals": {
+    "documents": 1000,
+    "annotations": 11158,
+    "unique_codes": 2557,
+    "codes_missing_from_catalog": 0
+  },
+  "verdict": "OK",
+  "critical_failures": [],
+  "warnings": [
+    "Se excluyeron 20 marcadores de capítulo (CAP.xx) del catálogo de códigos",
+    "train: 2 span(s) de longitud cero en CodiEsp-X; se excluirán de la evaluación de evidencia",
+    "dev: 1 span(s) de longitud cero en CodiEsp-X; se excluirán de la evaluación de evidencia"
+  ]
+}

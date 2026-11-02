@@ -17,7 +17,7 @@ help:
 	@echo "  make clean     Elimina cachés de Python y pytest"
 
 setup:
-	$(UV) venv --python $(PY_VERSION) .venv
+	$(UV) venv --python $(PY_VERSION) --clear .venv
 	$(UV) pip install --python .venv/bin/python --index-strategy unsafe-best-match -r requirements-dev.txt
 
 data:

@@ -23,7 +23,7 @@ El codificador humano valida; el sistema no reemplaza su criterio clínico.
 
 | Componente | Elección |
 |---|---|
-| Datos | CodiEsp (CLEF eHealth 2020, CC-BY-4.0) + 40 casos ficticios |
+| Datos | CodiEsp (CLEF eHealth 2020, CC-BY-4.0) + 40 casos ficticios (Fase 2) |
 | Terminología | ICD-10-CM español 2018 de CodiEsp (diagnósticos) |
 | Preproceso | Normalización, abreviaturas, segmentación y tolerancia a typos |
 | Representación | `intfloat/multilingual-e5-small` (benchmark con `BAAI/bge-m3`) |
@@ -138,7 +138,7 @@ No hay lógica duplicada por proveedor: todos usan el mismo prompt, el mismo esq
   > Miranda-Escalada, A., Gonzalez-Agirre, A., Armengol-Estapé, J., & Krallinger, M. (2020). *Overview of automatic clinical coding: annotations, guidelines, and solutions for non-English clinical cases at CodiEsp track of CLEF eHealth 2020*. CLEF eHealth 2020.
 
 - El catálogo y el corpus se descargan de Zenodo con verificación SHA-256. Los datos crudos no se versionan.
-- Los **40 casos ficticios** son inventados para la evaluación de negación, abreviaturas y typos; no corresponden a pacientes reales.
+- Los **40 casos ficticios** se crearán en la Fase 2 y serán inventados para evaluar negación, abreviaturas y typos; no corresponderán a pacientes reales.
 - Este prototipo es académico y **no** debe usarse para facturación, decisiones clínicas ni tratamiento de datos identificables.
 
 ## Documentación

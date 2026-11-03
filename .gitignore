@@ -4,12 +4,14 @@ venv/
 env/
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.pytype/
 .ipynb_checkpoints/
 .cache/
-.pytype/
 
 # --- secretos y configuración local ---
 .env
@@ -17,51 +19,16 @@ __pycache__/
 !.env.example
 .streamlit/secrets.toml
 
-# --- artefactos generados por la app ---
+# --- artefactos generados por la app / scripts ---
 data/raw/
 data/processed/
 data/indexes/
+reports/
 *.faiss
 *.npy
 *.npz
 *.sqlite
 *.db
-reports/
-!reports/.gitkeep
-
-# --- logs y temporales ---
-*.log
-*.tmp
-*.bak
-*.swp
-*.swo
-
-# --- editor / sistema ---
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-
-# --- documentación / LaTeX no necesaria para ejecutar el programa ---
-docs/
-*.tex
-*.pdf
-*.aux
-*.bbl
-*.bcf
-*.blg
-*.fdb_latexmk
-*.fls
-*.lof
-*.log
-*.lot
-*.out
-*.synctex.gz
-*.toc
-*.run.xml
-*.xdv
-
-# --- archivos de salida del proyecto que se regeneran ---
 *.jsonl
 *.csv
 *.tsv
@@ -72,5 +39,46 @@ docs/
 *.gif
 *.webp
 
-# --- mantener sólo lo mínimo necesario en git ---
-# Se conserva el código fuente, requirements, README, Makefile y .env.example
+# --- logs y temporales ---
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.pid
+
+# --- editor / sistema ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- metadatos locales del entorno de trabajo ---
+.agents/
+.claude/
+
+# --- documentos locales no necesarios para el repositorio ---
+docs/casos_ficticios.md
+
+# --- artefactos de compilación de LaTeX / documentos no imprescindibles ---
+.latex-build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.pdf
+*.run.xml
+*.synctex.gz
+*.tex
+*.toc
+*.xdv
+
+# --- mantener sólo lo mínimo necesario para que el proyecto arranque ---
+# Se conserva el código fuente, la configuración del proyecto, los datos mínimos del catálogo,
+# los requisitos y el ejemplo de entorno; lo demás se genera en local o se ignora.

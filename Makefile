@@ -4,7 +4,7 @@ PY_VERSION ?= 3.11.17
 HOST ?= 0.0.0.0
 PORT ?= 8010
 
-.PHONY: help setup data audit index retrieval-eval figures test lint smoke app api clean
+.PHONY: help setup data audit index retrieval-eval figures test lint smoke api clean
 
 help:
 	@echo "CodificaMed — comandos disponibles"
@@ -17,8 +17,7 @@ help:
 	@echo "  make test      Ejecuta pytest (sin tests de red)"
 	@echo "  make lint      Ejecuta ruff"
 	@echo "  make smoke     Verificación mínima de imports y configuración"
-	@echo "  make app       Lanza Streamlit (fase 5)"
-	@echo "  make api       Lanza FastAPI + frontend web (fase 5/6 reestructurada)"
+	@echo "  make api       Lanza la API FastAPI y sirve el frontend desde frontend/"
 	@echo "  make clean     Elimina cachés de Python y pytest"
 
 setup:
@@ -48,9 +47,6 @@ lint:
 
 smoke:
 	$(PYTHON) scripts/smoke_test.py
-
-app:
-	$(PYTHON) -m streamlit run app/streamlit_app.py --server.address 0.0.0.0 --server.port 8501
 
 api:
 	PORT=$(PORT) $(PYTHON) -m uvicorn backend.main:app --host $(HOST) --port $(PORT) --reload

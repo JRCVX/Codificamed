@@ -98,29 +98,22 @@ make test
 
 ## Ejecutar la aplicación
 
-### Opción 1: Streamlit (interfaz web simple)
-
-```bash
-make app
-```
-
-Luego abre la URL indicada por Streamlit, normalmente:
-
-```text
-http://localhost:8501
-```
-
-### Opción 2: API FastAPI + frontend web
-
-```bash
-make api
-```
-
-La API queda disponible en:
+Este proyecto se ejecuta en el modo API FastAPI + frontend web. La API sirve la interfaz desde la carpeta `frontend/` y queda disponible en:
 
 ```text
 http://localhost:8010
 ```
+
+Para arrancarlo:
+
+```bash
+make setup
+cp .env.example .env
+# edita .env con tus credenciales y proveedor LLM
+make api
+```
+
+Si quieres revisar la API manualmente, usa la URL anterior en el navegador o prueba un endpoint con curl.
 
 ## Uso rápido
 
@@ -174,7 +167,6 @@ make index
 make test
 make lint
 make smoke
-make app
 make api
 make clean
 ```

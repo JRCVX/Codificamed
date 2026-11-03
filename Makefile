@@ -1,19 +1,24 @@
 PYTHON ?= .venv/bin/python
 UV ?= uv
 PY_VERSION ?= 3.11.17
+HOST ?= 0.0.0.0
+PORT ?= 8010
 
-.PHONY: help setup data audit figures test lint smoke app clean
+.PHONY: help setup data audit index retrieval-eval figures test lint smoke app api clean
 
 help:
 	@echo "CodificaMed — comandos disponibles"
 	@echo "  make setup     Crea .venv con Python $(PY_VERSION) e instala dependencias"
 	@echo "  make data      Descarga y verifica CodiEsp desde Zenodo"
 	@echo "  make audit     Audita catálogo, corpus y spans"
+	@echo "  make index     Construye el índice denso FAISS del catálogo"
+	@echo "  make retrieval-eval Evalúa recall@30 en CodiEsp dev"
 	@echo "  make figures   Genera el diagrama de arquitectura"
 	@echo "  make test      Ejecuta pytest (sin tests de red)"
 	@echo "  make lint      Ejecuta ruff"
 	@echo "  make smoke     Verificación mínima de imports y configuración"
 	@echo "  make app       Lanza Streamlit (fase 5)"
+	@echo "  make api       Lanza FastAPI + frontend web (fase 5/6 reestructurada)"
 	@echo "  make clean     Elimina cachés de Python y pytest"
 
 setup:
@@ -25,6 +30,12 @@ data:
 
 audit:
 	$(PYTHON) scripts/audit_data.py
+
+index:
+	$(PYTHON) scripts/build_index.py
+
+retrieval-eval:
+	$(PYTHON) scripts/evaluate_retrieval.py
 
 figures:
 	$(PYTHON) scripts/make_figures.py
@@ -39,7 +50,10 @@ smoke:
 	$(PYTHON) scripts/smoke_test.py
 
 app:
-	$(PYTHON) -m streamlit run app/streamlit_app.py
+	$(PYTHON) -m streamlit run app/streamlit_app.py --server.address 0.0.0.0 --server.port 8501
+
+api:
+	PORT=$(PORT) $(PYTHON) -m uvicorn backend.main:app --host $(HOST) --port $(PORT) --reload
 
 clean:
 	find . -type d -name "__pycache__" -prune -exec rm -rf {} +

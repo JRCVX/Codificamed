@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodificaMed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Arquitectura fase 1–6</p>
+          <h1>CodificaMed</h1>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel rag-panel">
+          <h2>RAG cargado</h2>
+          <div id="rag-status" class="status-grid">
+            <div class="metric"><span>Catálogo</span><strong id="catalog-count">…</strong></div>
+            <div class="metric"><span>FAISS</span><strong id="faiss-status">…</strong></div>
+            <div class="metric"><span>Proveedor</span><strong id="provider-name">…</strong></div>
+          </div>
+          <div id="rag-detail" class="rag-detail"></div>
+        </section>
+
+        <section class="panel form-panel">
+          <h2>Nota clínica</h2>
+          <form id="coding-form">
+            <textarea id="clinical-note" rows="8" placeholder="Escribe la nota clínica aquí...">Paciente de 64 años con HTA y DM2. Niega fiebre. Se diagnostica insuficiencia cardiaca con fracción de eyección preservada.</textarea>
+
+            <div class="provider-control">
+              <label class="switch-label">Proveedor de IA</label>
+              <div class="provider-switch">
+                <label><input type="radio" name="provider-mode" value="local" /> Local (Ollama)</label>
+                <label><input type="radio" name="provider-mode" value="cloud" checked /> En la nube (OpenRouter/OpenAI)</label>
+              </div>
+            </div>
+
+            <div id="cloud-config" class="cloud-config">
+              <label for="cloud-provider">Proveedor cloud</label>
+              <select id="cloud-provider">
+                <option value="openrouter">OpenRouter</option>
+                <option value="openai">OpenAI</option>
+                <option value="gemini" selected>Google Gemini</option>
+                <option value="anthropic">Anthropic Claude</option>
+              </select>
+              <label for="cloud-model">Modelo cloud</label>
+              <input id="cloud-model" type="text" value="gemini-3.5-flash" placeholder="gemini-3.5-flash" />
+            </div>
+
+            <div class="controls">
+              <label for="top-k">Top-k</label>
+              <input id="top-k" type="range" min="5" max="50" value="10" />
+              <span id="top-k-label">10</span>
+            </div>
+            <button type="submit">Codificar nota</button>
+          </form>
+          <div id="message" class="message info">Listo para procesar.</div>
+        </section>
+      </main>
+
+      <section class="panel results-panel hidden" id="results-panel">
+        <h2>Resultados</h2>
+        <div id="result-summary" class="result-summary"></div>
+        <div id="results-list" class="results-list"></div>
+      </section>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

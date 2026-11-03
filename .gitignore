@@ -1,5 +1,7 @@
-# Entornos y cachés
+# --- entorno virtual y cachés locales ---
 .venv/
+venv/
+env/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -7,15 +9,15 @@ __pycache__/
 .mypy_cache/
 .ipynb_checkpoints/
 .cache/
-runs/
+.pytype/
 
-# Secretos y configuración local
+# --- secretos y configuración local ---
 .env
 .env.*
 !.env.example
 .streamlit/secrets.toml
 
-# Datos crudos y artefactos pesados (reproducibles con scripts/)
+# --- artefactos generados por la app ---
 data/raw/
 data/processed/
 data/indexes/
@@ -24,13 +26,51 @@ data/indexes/
 *.npz
 *.sqlite
 *.db
+reports/
+!reports/.gitkeep
 
-# Reportes temporales
-reports/tmp/
-reports/*.log
-
-# Salidas de sistema
-.DS_Store
-Thumbs.db
+# --- logs y temporales ---
 *.log
 *.tmp
+*.bak
+*.swp
+*.swo
+
+# --- editor / sistema ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- documentación / LaTeX no necesaria para ejecutar el programa ---
+docs/
+*.tex
+*.pdf
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.toc
+*.run.xml
+*.xdv
+
+# --- archivos de salida del proyecto que se regeneran ---
+*.jsonl
+*.csv
+*.tsv
+*.png
+*.svg
+*.jpg
+*.jpeg
+*.gif
+*.webp
+
+# --- mantener sólo lo mínimo necesario en git ---
+# Se conserva el código fuente, requirements, README, Makefile y .env.example

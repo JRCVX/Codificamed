@@ -1,0 +1,1372 @@
+{
+  "version": 1,
+  "description": "40 casos clínicos ficticios para evaluar negación, abreviaturas, typos y estados. No corresponden a pacientes reales.",
+  "cases": [
+    {
+      "id": "FIC-001",
+      "split": "dev",
+      "specialty": "cardiologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo",
+        "comorbidity"
+      ],
+      "text": "Paciente masculino de 64 años con antecedentes de HTA y DM2 de 10 años. Acude por disne de esfuerzo progresiva. Niega dolor torácico, palpitaciones y síncope. Al examen: TA 158/92 mmHg, FC 88 lpm, crépitos bibasales. Se solicita ECG y ecocardiograma; se diagnostica insuficiencia cardiaca con fracción de eyección preservada. Ajuste de tratamiento diurético y control de cifras tensionales.",
+      "mentions": [
+        {
+          "text": "HTA",
+          "code": "I10",
+          "state": "confirmed"
+        },
+        {
+          "text": "DM2",
+          "code": "E11.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega dolor torácico",
+          "code": "R07.9",
+          "state": "negated"
+        },
+        {
+          "text": "insuficiencia cardiaca",
+          "code": "I50.9",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-002",
+      "split": "dev",
+      "specialty": "endocrinologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo",
+        "comorbidity"
+      ],
+      "text": "Femenina de 52 años con DM2, obesidat y dislipidemia. Refiere astenia y aumento de peso. Niega cefalea, palpitaciones y visión borrosa. Laboratorio: HbA1c 9,1%, TSH 6,8, LDL 160 mg/dL. Se ajusta insulina basal y se inicia estatina. Se documenta hipotiroidismo primario y se solicita control en tres meses.",
+      "mentions": [
+        {
+          "text": "DM2",
+          "code": "E11.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "obesidat",
+          "code": "E66.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "dislipidemia",
+          "code": "E78.5",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega cefalea",
+          "code": "R51",
+          "state": "negated"
+        },
+        {
+          "text": "hipotiroidismo primario",
+          "code": "E03.9",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-003",
+      "split": "dev",
+      "specialty": "neumologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo",
+        "comorbidity"
+      ],
+      "text": "Masculino de 71 años, fumador, con EPOC y HTA. Ingresa por aumento de disne y expectoración purulenta. Niega fiebre y hemoptisis. Rx tórax con infiltrado en lóbulo inferior derecho; se diagnostica neumonía adquirida en la comunidad. Se inicia antibioticoterapia y broncodilatadores. SatO2 89% al aire ambiente.",
+      "mentions": [
+        {
+          "text": "EPOC",
+          "code": "J44.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "HTA",
+          "code": "I10",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "hemoptisis",
+          "code": "R04.2",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "neumonía",
+          "code": "J18.9",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-004",
+      "split": "dev",
+      "specialty": "gastroenterologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo"
+      ],
+      "text": "Femenina de 38 años con dolor abd de 48 horas, náuseas y vómito. Niega diarrea y fiebre. Examen: dolor epigástrico a la palpación, sin defensa. Se realiza endoscopia que muestra gastriti erosiva. Se indica inhibidor de bomba de protones y control.",
+      "mentions": [
+        {
+          "text": "dolor abd",
+          "code": "R10.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega diarrea",
+          "code": "R19.7",
+          "state": "negated"
+        },
+        {
+          "text": "fiebre",
+          "code": "R50.9",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "gastriti erosiva",
+          "code": "K29.70",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-005",
+      "split": "dev",
+      "specialty": "neurologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Masculino de 29 años con cefalea pulsátil de 12 horas, fotofobia y náuseas. Niega fiebre, rigidez de nuca y pérdida de visión. Antecedente de migraña sin aura. Examen neurológico normal. Se administra triptán y antiemético; se diagnostica migraña. Control en consulta externa.",
+      "mentions": [
+        {
+          "text": "cefalea",
+          "code": "R51",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "rigidez de nuca",
+          "code": "R29.1",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "pérdida de visión",
+          "code": "H53.9",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "migraña",
+          "code": "G43.909",
+          "state": "confirmed",
+          "occurrence": 1
+        }
+      ]
+    },
+    {
+      "id": "FIC-006",
+      "split": "dev",
+      "specialty": "nefrologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 67 años con ERC estadio 3b, HTA y anemia. Acude por disuria y urgencia miccional. Niega fiebre y dolor lumbar. EGO con leucocitos y nitritos positivos; se diagnostica ITU no complicada. Se ajusta antibiótico según función renal y se controla potasio.",
+      "mentions": [
+        {
+          "text": "ERC",
+          "code": "N18.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "HTA",
+          "code": "I10",
+          "state": "confirmed"
+        },
+        {
+          "text": "anemia",
+          "code": "D64.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "dolor lumbar",
+          "code": "M54.5",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "ITU",
+          "code": "N39.0",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-007",
+      "split": "dev",
+      "specialty": "traumatologia",
+      "phenomena": [
+        "abbreviation",
+        "negation"
+      ],
+      "text": "Masculino de 45 años que sufre caída de bicicleta. Presenta dolor y deformidad en muñeca derecha. Niega pérdida de conocimiento y parestesias. Rx: fractura de extremo distal de radio derecho. Se realiza reducción cerrada e inmovilización. Se indica analgesia y control en ortopedia.",
+      "mentions": [
+        {
+          "text": "Niega pérdida de conocimiento",
+          "code": "R55",
+          "state": "negated"
+        },
+        {
+          "text": "parestesias",
+          "code": "R20.2",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "fractura de extremo distal de radio derecho",
+          "code": "S52.501A",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-008",
+      "split": "dev",
+      "specialty": "ginecologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 26 años, embarazo de 9 semanas, acude por sangrado vaginal escaso y dolor pélvico. Niega fiebre y pérdida de líquido. Ecografía: saco gestacional íntegro, embrión con latido. Se diagnostica amenaza de aborto. Se indica reposo relativo y seguimiento con hCG.",
+      "mentions": [
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "dolor pélvico",
+          "code": "R10.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "amenaza de aborto",
+          "code": "O20.0",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-009",
+      "split": "dev",
+      "specialty": "pediatria",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Niño de 5 años con fiebre de 38,5°C, exantema vesicular y prurito. Niega dificultad respiratoria y vómito. Madre con varicela hace dos semanas. Se diagnostica varicela sin complicaciones. Se indica tratamiento sintomático, aislamiento y control.",
+      "mentions": [
+        {
+          "text": "fiebre de 38,5°C",
+          "code": "R50.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega dificultad respiratoria",
+          "code": "R06.02",
+          "state": "negated"
+        },
+        {
+          "text": "vómito",
+          "code": "R11.2",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "varicela sin complicaciones",
+          "code": "B01.9",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-010",
+      "split": "dev",
+      "specialty": "psiquiatria",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 34 años con ánimo depresivo, anhedonia e insomnio de tres meses. Niega ideación suicida, alucinaciones y consumo de sustancias. Antecedente de ansiedad. Se diagnostica trastorno depresivo mayor y trastorno de ansiedad. Se inicia sertralina y psicoterapia; control en dos semanas.",
+      "mentions": [
+        {
+          "text": "Niega ideación suicida",
+          "code": "R45.851",
+          "state": "negated"
+        },
+        {
+          "text": "alucinaciones",
+          "code": "R44.3",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "trastorno depresivo mayor",
+          "code": "F32.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "trastorno de ansiedad",
+          "code": "F41.9",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-011",
+      "split": "test",
+      "specialty": "cardiologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo",
+        "comorbidity"
+      ],
+      "text": "Masculino de 58 años con HTA, DM2 y tabaquismo. Acude por dolor torácico opresivo de 40 minutos y sudoracion. Niega disnea y síncope. ECG: elevación de ST en cara inferior. Se diagnostica IAMCEST y se activa código infarto. Se realiza angioplastia primaria.",
+      "mentions": [
+        {
+          "text": "HTA",
+          "code": "I10",
+          "state": "confirmed"
+        },
+        {
+          "text": "DM2",
+          "code": "E11.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "dolor torácico opresivo",
+          "code": "R07.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega disnea",
+          "code": "R06.02",
+          "state": "negated"
+        },
+        {
+          "text": "síncope",
+          "code": "R55",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "IAMCEST",
+          "code": "I21.3",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-012",
+      "split": "test",
+      "specialty": "neumologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "suspected",
+        "comorbidity"
+      ],
+      "text": "Femenina de 24 años con asma desde la infancia y rinitis alérgica. Acude por tos seca y sibilancias tras exposición a polvo. Niega fiebre y dolor torácico. Espirometría con obstrucción reversible. Se ajusta corticosteroide inhalado y se diagnostica asma no controlada; queda en observación por sospecha de neumonía.",
+      "mentions": [
+        {
+          "text": "asma",
+          "code": "J45.909",
+          "state": "confirmed"
+        },
+        {
+          "text": "rinitis alérgica",
+          "code": "J30.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "dolor torácico",
+          "code": "R07.9",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "sospecha de neumonía",
+          "code": "J18.9",
+          "state": "suspected"
+        }
+      ]
+    },
+    {
+      "id": "FIC-013",
+      "split": "test",
+      "specialty": "gastroenterologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo"
+      ],
+      "text": "Masculino de 22 años con dolor abd migratorio a fosa ilíaca derecha, náuseas y fiebre de 38°C. Niega diarrea y disuria. Examen: McBurney positivo. Ecografía compatible con apendicits aguda. Se realiza apendicectomía laparoscópica.",
+      "mentions": [
+        {
+          "text": "dolor abd",
+          "code": "R10.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "fiebre de 38°C",
+          "code": "R50.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega diarrea",
+          "code": "R19.7",
+          "state": "negated"
+        },
+        {
+          "text": "disuria",
+          "code": "R30.0",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "apendicits aguda",
+          "code": "K35.80",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-014",
+      "split": "test",
+      "specialty": "endocrinologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 45 años con hipotiroidismo, dislipidemia y obesidad. Refiere fatiga y estreñimiento. Niega palpitaciones y temblor. Laboratorio: TSH 12,4, T4 libre baja, LDL 190. Se ajusta levotiroxina y se refuerza dieta; se diagnostica hipotiroidismo primario.",
+      "mentions": [
+        {
+          "text": "hipotiroidismo",
+          "code": "E03.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "dislipidemia",
+          "code": "E78.5",
+          "state": "confirmed"
+        },
+        {
+          "text": "obesidad",
+          "code": "E66.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "estreñimiento",
+          "code": "K59.00",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega palpitaciones",
+          "code": "R00.2",
+          "state": "negated"
+        },
+        {
+          "text": "temblor",
+          "code": "R25.1",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-015",
+      "split": "test",
+      "specialty": "neurologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo",
+        "comorbidity"
+      ],
+      "text": "Masculino de 69 años con HTA y fibrilacion auricular. Acude por hemiparesia derecha de inicio súbito y afasia. Niega cefalea y convulsión. TAC sin hemorragia; se diagnostica infarto cerebral isquémico. Se inicia anticoagulación y rehabilitación.",
+      "mentions": [
+        {
+          "text": "HTA",
+          "code": "I10",
+          "state": "confirmed"
+        },
+        {
+          "text": "fibrilacion auricular",
+          "code": "I48.91",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega cefalea",
+          "code": "R51",
+          "state": "negated"
+        },
+        {
+          "text": "convulsión",
+          "code": "R56.9",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "infarto cerebral isquémico",
+          "code": "I63.9",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-016",
+      "split": "test",
+      "specialty": "nefrologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 40 años con cólico renal derecho de 6 horas, hematuria y náuseas. Niega fiebre y disuria. TAC: litiasis de 6 mm en uréter distal. Se indica analgesia, hidratación y control; se diagnostica cólico renal por litiasis.",
+      "mentions": [
+        {
+          "text": "cólico renal",
+          "code": "N23",
+          "state": "confirmed"
+        },
+        {
+          "text": "litiasis",
+          "code": "N20.0",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "disuria",
+          "code": "R30.0",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-017",
+      "split": "test",
+      "specialty": "traumatologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Masculino de 30 años con esguince de tobillo derecho tras partido de fútbol. Niega pérdida de conocimiento y parestesias. Examen: edema y dolor en maléolo lateral, ligamentos estables. Rx sin fractura. Se indica hielo, inmovilización y analgesia.",
+      "mentions": [
+        {
+          "text": "esguince de tobillo derecho",
+          "code": "S93.401A",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega pérdida de conocimiento",
+          "code": "R55",
+          "state": "negated"
+        },
+        {
+          "text": "parestesias",
+          "code": "R20.2",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-018",
+      "split": "test",
+      "specialty": "ginecologia",
+      "phenomena": [
+        "abbreviation",
+        "negation"
+      ],
+      "text": "Femenina de 24 años, embarazo de 11 semanas, con vómitos persistentes y pérdida de peso. Niega dolor abd y fiebre. Laboratorio: cetonuria y deshidratación leve. Se diagnostica hiperemesis gravídica leve y se indica hidratación endovenosa.",
+      "mentions": [
+        {
+          "text": "hiperemesis gravídica leve",
+          "code": "O21.0",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega dolor abd",
+          "code": "R10.9",
+          "state": "negated"
+        },
+        {
+          "text": "fiebre",
+          "code": "R50.9",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-019",
+      "split": "test",
+      "specialty": "pediatria",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Niño de 3 años con otalgia derecha, fiebre de 38,2°C y irritabilidad. Niega vómito y diarrea. Otoscopia: membrana timpánica abombada. Se diagnostica otitis media aguda. Se prescribe amoxicilina y analgesia.",
+      "mentions": [
+        {
+          "text": "otitis media aguda",
+          "code": "H66.90",
+          "state": "confirmed"
+        },
+        {
+          "text": "fiebre de 38,2°C",
+          "code": "R50.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega vómito",
+          "code": "R11.2",
+          "state": "negated"
+        },
+        {
+          "text": "diarrea",
+          "code": "R19.7",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-020",
+      "split": "test",
+      "specialty": "psiquiatria",
+      "phenomena": [
+        "negation",
+        "typo"
+      ],
+      "text": "Masculino de 41 años con ansiedat generalizada y episodios de pánico. Niega ideación suicida y alucinaciones. Refiere insomnio y palpitaciones. Se inicia terapia cognitivo-conductual y sertralina; se diagnostica trastorno de ansiedad.",
+      "mentions": [
+        {
+          "text": "ansiedat generalizada",
+          "code": "F41.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega ideación suicida",
+          "code": "R45.851",
+          "state": "negated"
+        },
+        {
+          "text": "alucinaciones",
+          "code": "R44.3",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-021",
+      "split": "test",
+      "specialty": "dermatologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 33 años con placas eritematoescamosas en codos y rodillas, prurito leve. Niega fiebre y artralgias. Antecedente familiar de psoriasis. Se diagnostica psoriasis en placas y se inicia corticosteroide tópico.",
+      "mentions": [
+        {
+          "text": "psoriasis",
+          "code": "L40.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "artralgias",
+          "code": "M25.50",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-022",
+      "split": "test",
+      "specialty": "oftalmologia",
+      "phenomena": [
+        "negation"
+      ],
+      "text": "Masculino de 28 años con ojo rojo, secreción y prurito. Niega pérdida de visión y dolor ocular. Se diagnostica conjuntivitis aguda; se indica lavado y colirio antibiótico.",
+      "mentions": [
+        {
+          "text": "conjuntivitis aguda",
+          "code": "H10.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega pérdida de visión",
+          "code": "H53.9",
+          "state": "negated"
+        },
+        {
+          "text": "dolor ocular",
+          "code": "H57.1",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-023",
+      "split": "test",
+      "specialty": "otorrinolaringologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 35 años con cefalea frontal, rinorrea purulenta y congestión nasal de 3 semanas. Niega fiebre y epistaxis. TAC de senos: engrosamiento mucoso maxilar. Se diagnostica sinusitis crónica.",
+      "mentions": [
+        {
+          "text": "sinusitis crónica",
+          "code": "J32.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "cefalea",
+          "code": "R51",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "epistaxis",
+          "code": "R04.0",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-024",
+      "split": "test",
+      "specialty": "urologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "historical",
+        "comorbidity"
+      ],
+      "text": "Masculino de 72 años con HBP, nicturia y chorro débil. Niega hematuria y fiebre. Antecedente de infarto agudo de miocardio hace cinco años. Tacto rectal: próstata aumentada. Se diagnostica hiperplasia prostática benigna con síntomas urinarios; se inicia tamsulosina.",
+      "mentions": [
+        {
+          "text": "HBP",
+          "code": "N40.1",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega hematuria",
+          "code": "R31.9",
+          "state": "negated"
+        },
+        {
+          "text": "fiebre",
+          "code": "R50.9",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "infarto agudo de miocardio",
+          "code": "I21.3",
+          "state": "historical"
+        }
+      ]
+    },
+    {
+      "id": "FIC-025",
+      "split": "test",
+      "specialty": "cardiologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 76 años con fibrilación auricular e insuficiencia cardiaca. Acude por palpitaciones y edema de miembros inferiores. Niega dolor torácico y síncope. ECG: FA con respuesta ventricular rápida. Se ajusta anticoagulación y diurético.",
+      "mentions": [
+        {
+          "text": "fibrilación auricular",
+          "code": "I48.91",
+          "state": "confirmed"
+        },
+        {
+          "text": "insuficiencia cardiaca",
+          "code": "I50.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega dolor torácico",
+          "code": "R07.9",
+          "state": "negated"
+        },
+        {
+          "text": "síncope",
+          "code": "R55",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-026",
+      "split": "test",
+      "specialty": "neumologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo"
+      ],
+      "text": "Masculino de 48 años con tos de 2 meses, sudoración nocturna y pérdida de peso. Niega hemoptisis y disnea. Rx: infiltrado apical. BK positivo; se diagnostica tuberculois pulmonar. Se inicia esquema antituberculoso.",
+      "mentions": [
+        {
+          "text": "tuberculois pulmonar",
+          "code": "A15.0",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega hemoptisis",
+          "code": "R04.2",
+          "state": "negated"
+        },
+        {
+          "text": "disnea",
+          "code": "R06.02",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-027",
+      "split": "test",
+      "specialty": "gastroenterologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 50 años con dolor abd y hepatomegalia. Niega ictericia y fiebre. Ecografía: hígado graso. Se diagnostica esteatosis hepática no alcohólica; se indica dieta y control de dislipidemia.",
+      "mentions": [
+        {
+          "text": "dolor abd",
+          "code": "R10.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "hígado graso",
+          "code": "K76.0",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega ictericia",
+          "code": "R17",
+          "state": "negated"
+        },
+        {
+          "text": "fiebre",
+          "code": "R50.9",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "dislipidemia",
+          "code": "E78.5",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-028",
+      "split": "test",
+      "specialty": "endocrinologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "family"
+      ],
+      "text": "Masculino de 19 años con DM1 desde los 8 años. Acude por fatiga y glucemias elevadas. Niega vómito y dolor abd. Madre con DM2. HbA1c 10,2%; se ajusta insulina basal-bolo y se refuerza educación. Se diagnostica DM1 sin complicaciones.",
+      "mentions": [
+        {
+          "text": "DM1",
+          "code": "E10.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega vómito",
+          "code": "R11.2",
+          "state": "negated"
+        },
+        {
+          "text": "dolor abd",
+          "code": "R10.9",
+          "state": "negated",
+          "trigger": "Niega"
+        },
+        {
+          "text": "Madre con DM2",
+          "code": "E11.9",
+          "state": "family"
+        },
+        {
+          "text": "fatiga",
+          "code": "R53.83",
+          "state": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "FIC-029",
+      "split": "test",
+      "specialty": "neurologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 26 años con epilepsia conocida. Acude por cefalea y olvido de medicación. Niega fiebre y vómito. Se ajusta antiepiléptico y se solicita niveles plasmáticos.",
+      "mentions": [
+        {
+          "text": "epilepsia",
+          "code": "G40.909",
+          "state": "confirmed"
+        },
+        {
+          "text": "cefalea",
+          "code": "R51",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "vómito",
+          "code": "R11.2",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-030",
+      "split": "test",
+      "specialty": "traumatologia",
+      "phenomena": [
+        "negation"
+      ],
+      "text": "Masculino de 55 años con fractura de radio derecho tras caída. Niega parestesias y pérdida de conocimiento. Se realiza reducción e inmovilización; Rx de control aceptable. Se indica analgesia y control.",
+      "mentions": [
+        {
+          "text": "fractura de radio derecho",
+          "code": "S52.501A",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega parestesias",
+          "code": "R20.2",
+          "state": "negated"
+        },
+        {
+          "text": "pérdida de conocimiento",
+          "code": "R55",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-031",
+      "split": "test",
+      "specialty": "infectologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Femenina de 60 años con DM2, erisipela en pierna derecha, fiebre y rubor. Niega dolor torácico y disnea. Se inicia antibiótico endovenoso y control glucémico.",
+      "mentions": [
+        {
+          "text": "DM2",
+          "code": "E11.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "erisipela",
+          "code": "A46",
+          "state": "confirmed"
+        },
+        {
+          "text": "fiebre",
+          "code": "R50.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega dolor torácico",
+          "code": "R07.9",
+          "state": "negated"
+        },
+        {
+          "text": "disnea",
+          "code": "R06.02",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-032",
+      "split": "test",
+      "specialty": "ginecologia",
+      "phenomena": [
+        "negation",
+        "typo",
+        "comorbidity"
+      ],
+      "text": "Femenina de 31 años con dismenorrea severa y dolor pélvico cíclico. Niega disuria y fiebre. Ecografía: quiste endometriósico. Se diagnostica endometriois y se inicia tratamiento hormonal.",
+      "mentions": [
+        {
+          "text": "endometriois",
+          "code": "N80.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega disuria",
+          "code": "R30.0",
+          "state": "negated"
+        },
+        {
+          "text": "fiebre",
+          "code": "R50.9",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-033",
+      "split": "test",
+      "specialty": "pediatria",
+      "phenomena": [
+        "negation"
+      ],
+      "text": "Recién nacido de 4 días con ictericia. Niega fiebre y dificultad respiratoria. Bilirrubina total 14 mg/dL; se indica fototerapia. Se diagnostica ictericia neonatal no especificada.",
+      "mentions": [
+        {
+          "text": "ictericia neonatal",
+          "code": "P59.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "dificultad respiratoria",
+          "code": "R06.02",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-034",
+      "split": "test",
+      "specialty": "psiquiatria",
+      "phenomena": [
+        "negation",
+        "typo",
+        "comorbidity"
+      ],
+      "text": "Masculino de 30 años con depresion mayor y ansiedad. Niega alucinaciones e ideación suicida. Refiere insomnio y anhedonia. Se ajusta antidepresivo y se programa seguimiento.",
+      "mentions": [
+        {
+          "text": "depresion mayor",
+          "code": "F32.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "ansiedad",
+          "code": "F41.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega alucinaciones",
+          "code": "R44.3",
+          "state": "negated"
+        },
+        {
+          "text": "ideación suicida",
+          "code": "R45.851",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-035",
+      "split": "test",
+      "specialty": "dermatologia",
+      "phenomena": [
+        "negation"
+      ],
+      "text": "Femenina de 27 años con urticaria generalizada y prurito. Niega disnea y angioedema. Se administra antihistamínico; se diagnostica urticaria aguda.",
+      "mentions": [
+        {
+          "text": "urticaria generalizada",
+          "code": "L50.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega disnea",
+          "code": "R06.02",
+          "state": "negated"
+        },
+        {
+          "text": "angioedema",
+          "code": "T78.3",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-036",
+      "split": "test",
+      "specialty": "oftalmologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Masculino de 65 años con glaucoma conocido y HTA. Acude por visión borrosa indolora. Niega dolor ocular y ojo rojo. Tonometría elevada; se ajusta tratamiento hipotensor ocular.",
+      "mentions": [
+        {
+          "text": "glaucoma",
+          "code": "H40.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "HTA",
+          "code": "I10",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega dolor ocular",
+          "code": "H57.1",
+          "state": "negated"
+        },
+        {
+          "text": "ojo rojo",
+          "code": "H57.9",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-037",
+      "split": "test",
+      "specialty": "otorrinolaringologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Niña de 6 años con otalgia izquierda y fiebre. Niega vértigo y vómito. Otoscopia: otitis media aguda. Se prescribe amoxicilina.",
+      "mentions": [
+        {
+          "text": "otitis media aguda",
+          "code": "H66.90",
+          "state": "confirmed"
+        },
+        {
+          "text": "fiebre",
+          "code": "R50.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega vértigo",
+          "code": "H81.10",
+          "state": "negated"
+        },
+        {
+          "text": "vómito",
+          "code": "R11.2",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-038",
+      "split": "test",
+      "specialty": "urologia",
+      "phenomena": [
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Masculino de 45 años con disuria, fiebre y dolor perineal. Niega hematuria y dolor lumbar. Tacto rectal doloroso; se diagnostica prostatitis aguda. Se inicia antibiótico.",
+      "mentions": [
+        {
+          "text": "prostatitis aguda",
+          "code": "N41.0",
+          "state": "confirmed"
+        },
+        {
+          "text": "fiebre",
+          "code": "R50.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega hematuria",
+          "code": "R31.9",
+          "state": "negated"
+        },
+        {
+          "text": "dolor lumbar",
+          "code": "M54.5",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-039",
+      "split": "test",
+      "specialty": "cardiologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "comorbidity"
+      ],
+      "text": "Masculino de 62 años con HTA y DM2. Acude por dolor torácico y sudoración. Niega síncope y palpitaciones. ECG: IAMSEST. Se ingresa a unidad coronaria y se inicia tratamiento antiagregante.",
+      "mentions": [
+        {
+          "text": "HTA",
+          "code": "I10",
+          "state": "confirmed"
+        },
+        {
+          "text": "DM2",
+          "code": "E11.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "dolor torácico",
+          "code": "R07.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "IAMSEST",
+          "code": "I21.4",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega síncope",
+          "code": "R55",
+          "state": "negated"
+        },
+        {
+          "text": "palpitaciones",
+          "code": "R00.2",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    },
+    {
+      "id": "FIC-040",
+      "split": "test",
+      "specialty": "neumologia",
+      "phenomena": [
+        "abbreviation",
+        "negation",
+        "typo",
+        "comorbidity"
+      ],
+      "text": "Femenina de 70 años con EPOC y neumonia. Acude por disnea y tos productiva. Niega fiebre y hemoptisis. Se inicia antibioticoterapia, broncodilatadores y oxígeno suplementario.",
+      "mentions": [
+        {
+          "text": "EPOC",
+          "code": "J44.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "neumonia",
+          "code": "J18.9",
+          "state": "confirmed"
+        },
+        {
+          "text": "Niega fiebre",
+          "code": "R50.9",
+          "state": "negated"
+        },
+        {
+          "text": "hemoptisis",
+          "code": "R04.2",
+          "state": "negated",
+          "trigger": "Niega"
+        }
+      ]
+    }
+  ]
+}

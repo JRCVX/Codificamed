@@ -19,7 +19,7 @@ from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-ProviderName = Literal["ollama", "openai", "anthropic", "mock"]
+ProviderName = Literal["ollama", "openrouter", "openai", "gemini", "anthropic", "mock"]
 DeviceName = Literal["cpu", "cuda", "auto"]
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 
@@ -34,23 +34,28 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # Proveedor LLM
+    # Proveedor LLM activo: local (Ollama), cloud (OpenRouter/OpenAI-compatible) o mock.
     llm_provider: ProviderName = "ollama"
-    llm_model: str = "qwen3:8b"
+    llm_model: str = "mistral"
     llm_temperature: float = Field(default=0.0, ge=0.0, le=2.0)
     llm_max_tokens: int = Field(default=1200, ge=64, le=8192)
 
-    # Ollama
+    # Ollama (local o remoto)
     ollama_base_url: str = "http://localhost:11434"
 
-    # API compatible con OpenAI (OpenAI, OpenRouter, Groq, vLLM...)
-    openai_api_key: SecretStr | None = None
+    # Proveedor cloud externo
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
+    openrouter_model: str = "openai/gpt-4o-mini"
+    openrouter_api_key: SecretStr | None = None
     openai_base_url: str = "https://api.openai.com/v1"
     openai_model: str = "gpt-4o-mini"
-
-    # Anthropic
+    openai_api_key: SecretStr | None = None
+    gemini_base_url: str = "https://generativelanguage.googleapis.com"
+    gemini_model: str = "gemini-3.5-flash"
+    gemini_api_key: SecretStr | None = None
+    anthropic_base_url: str = "https://api.anthropic.com"
+    anthropic_model: str = "claude-3-5-sonnet-20241022"
     anthropic_api_key: SecretStr | None = None
-    anthropic_model: str = "claude-3-5-haiku-latest"
 
     # Embeddings y recuperación
     embedding_model: str = "intfloat/multilingual-e5-small"
@@ -62,6 +67,7 @@ class Settings(BaseSettings):
     # Rutas (relativas a la raíz del proyecto)
     catalog_path: Path = Path("data/catalog/cie10_d_codes.tsv")
     faiss_index_path: Path = Path("data/indexes/cie10_e5_small.faiss")
+    faiss_codes_path: Path = Path("data/indexes/cie10_e5_small.codes.txt")
     cache_dir: Path = Path(".cache/llm")
 
     # Operación
@@ -74,7 +80,7 @@ class Settings(BaseSettings):
             return value.strip().lower()
         return value
 
-    @field_validator("llm_model", "openai_model", "anthropic_model")
+    @field_validator("llm_model")
     @classmethod
     def _strip_model(cls, value: str) -> str:
         value = value.strip()
@@ -82,14 +88,7 @@ class Settings(BaseSettings):
             raise ValueError("El nombre del modelo no puede estar vacío")
         return value
 
-    @field_validator("openai_api_key", "anthropic_api_key", mode="before")
-    @classmethod
-    def _empty_secret_to_none(cls, value: object) -> object:
-        if isinstance(value, str) and not value.strip():
-            return None
-        return value
-
-    @field_validator("catalog_path", "faiss_index_path", "cache_dir", mode="after")
+    @field_validator("catalog_path", "faiss_index_path", "faiss_codes_path", "cache_dir", mode="after")
     @classmethod
     def _resolve_path(cls, value: Path) -> Path:
         return value if value.is_absolute() else (PROJECT_ROOT / value).resolve()
@@ -112,13 +111,33 @@ class Settings(BaseSettings):
         ):
             path.mkdir(parents=True, exist_ok=True)
 
+    def openrouter_key(self) -> str | None:
+        """Clave de acceso al proveedor cloud externo."""
+        if self.openrouter_api_key is None:
+            return None
+        value = self.openrouter_api_key.get_secret_value().strip()
+        return value or None
+
     def openai_key(self) -> str | None:
-        """Devuelve la clave de OpenAI sin exponerla en logs/repr."""
-        return self.openai_api_key.get_secret_value() if self.openai_api_key else None
+        """Compatibilidad legacy para APIs OpenAI-compatible."""
+        if self.openai_api_key is None:
+            return None
+        value = self.openai_api_key.get_secret_value().strip()
+        return value or None
+
+    def gemini_key(self) -> str | None:
+        """Clave de acceso del proveedor Google Gemini."""
+        if self.gemini_api_key is None:
+            return None
+        value = self.gemini_api_key.get_secret_value().strip()
+        return value or None
 
     def anthropic_key(self) -> str | None:
-        """Devuelve la clave de Anthropic sin exponerla en logs/repr."""
-        return self.anthropic_api_key.get_secret_value() if self.anthropic_api_key else None
+        """Clave de acceso para Anthropic Claude."""
+        if self.anthropic_api_key is None:
+            return None
+        value = self.anthropic_api_key.get_secret_value().strip()
+        return value or None
 
 
 @lru_cache(maxsize=1)

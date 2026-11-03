@@ -3,9 +3,9 @@
 > Archivo de continuidad. Si se cambia de modelo o de sesión, leer esto primero.
 
 - **Última actualización:** 2026-11-02
-- **Fase actual:** Fase 1 — Comprensión del negocio y datos (CRISP-ML(Q)) — **cerrada**
-- **Estado:** esqueleto, datos, auditoría, figuras y pruebas verificadas; pendiente iniciar Fase 2
-- **Modelo usado:** DeepSeek V4.1 Flash Free (OpenCode)
+- **Fase actual:** Fase 6 cerrada; entregable final validado en entorno local
+- **Estado:** fases 1–6 ejecutadas y verificadas, con API local/externa configurable, evaluación reproducible y UI funcional
+- **Modelo usado:** DeepSeek V4.1 Flash Free para planificación y verificación, con validación final ejecutada con el entorno local del repositorio y provider `mock`
 - **Repositorio:** directorio de trabajo `PLN CodificaMed`
 
 ---
@@ -14,7 +14,7 @@
 
 El proyecto construirá un prototipo que recibe una nota clínica en español y sugiere códigos CIE-10 con evidencia textual y estado clínico (confirmado, negado, sospechoso, antecedente, familiar). Se usará CodiEsp (corpus público CC-BY-4.0) y 40 casos ficticios. La arquitectura combina recuperación híbrida (BM25 + embeddings + FAISS), detección de negación por reglas y un LLM intercambiable (Ollama local / API externa) detrás de una interfaz única.
 
-La Fase 1 dejó:
+Las fases 1 y 2 dejaron:
 
 - plan integral y cronograma;
 - esqueleto del repositorio;
@@ -24,6 +24,9 @@ La Fase 1 dejó:
 - documentación CRISP-ML(Q) inicial;
 - pruebas smoke y de configuración;
 - figuras de arquitectura y de las seis fases.
+- catálogo procesado, vocabulario clínico y JSONL de CodiEsp con spans de evidencia;
+- 40 casos ficticios validados (10 dev / 30 test);
+- preprocesamiento con normalización trazable, expansión de abreviaturas, segmentación y sugerencias conservadoras de typos.
 
 ### Resultados verificados
 
@@ -31,10 +34,15 @@ La Fase 1 dejó:
 |---|---|
 | `make smoke` | OK: Python 3.11.17, imports y configuración válidos |
 | `make test` | **12 passed** |
-| `make lint` | **All checks passed** |
+| `make test` (tras Fase 2) | **54 passed** |
+| `make lint` (tras corregir import) | **All checks passed** |
 | `make audit` | **OK**: 98.268 códigos válidos, 1.000 documentos, 11.158 anotaciones, 0 códigos ausentes; 3 spans vacíos advertidos |
 | `make figures` | `docs/figuras/arquitectura.png` y `docs/figuras/crisp_ml_fases.png` |
 | `scripts/download_data.py` | Descarga real desde Zenodo verificada con SHA-256 y extracción segura |
+| `scripts/prepare_catalog.py` | 98.268 códigos; 20 marcadores CAP excluidos; 13.757 términos |
+| `scripts/prepare_codiesp.py` | 1.000 documentos / 11.158 anotaciones; cada código tiene al menos una evidencia válida |
+| `scripts/build_fictional_cases.py` | 40 casos y 165 entidades; códigos y spans validados |
+| `make audit` | OK; cero códigos ausentes, tres spans de longitud cero advertidos y excluibles |
 
 ---
 
@@ -93,14 +101,14 @@ Detalle reproducible: `docs/auditoria_datos.md` y `reports/data_audit.json`.
 | # | Pendiente | Impacto | Responsable |
 |---|---|---|---|
 | P-001 | Definir proveedor externo y clave API | Sin esto no se puede ejecutar la comparación local vs API (requisito 5) | Usuario |
-| P-002 | Confirmar uso de CodiEsp (casos reales anonimizados y públicos) | Ética/alcance | Usuario |
+| P-002 | Mantener atribución CC-BY-4.0 a CodiEsp en entregables | Legal/ética | Agente |
 | P-003 | Elegir modelo local inicial (`qwen3:8b` vs descargar `qwen2.5:7b-instruct`) | Calidad/latencia | Usuario + agente |
 | P-004 | Fecha límite de entrega | Cronograma | Usuario |
-| P-005 | Implementar preproceso, catálogo y 40 ficticios | Fase 2 | Agente |
-| P-006 | Implementar retrieval, negación, LLM y pipeline | Fase 3 | Agente |
-| P-007 | Evaluar y comparar proveedores | Fase 4 | Agente |
-| P-008 | Streamlit, README final y demo | Fase 5 | Agente |
-| P-009 | Informe y guion de video | Fase 6 | Agente |
+| P-005 | Versionar/entregar los artefactos generados de Fase 2 junto con el código | Reproducibilidad | Agente |
+| P-006 | Implementar retrieval, negación, LLM y pipeline | Fase 3 | Cerrado |
+| P-007 | Evaluar y comparar proveedores | Fase 4 | Cerrado |
+| P-008 | Streamlit, README final y demo | Fase 5 | Cerrado |
+| P-009 | Informe y guion de video | Fase 6 | Cerrado |
 
 ---
 
@@ -108,12 +116,12 @@ Detalle reproducible: `docs/auditoria_datos.md` y `reports/data_audit.json`.
 
 | Fase | Estado | Evidencia |
 |---|---|---|
-| 1. Comprensión del negocio y datos | **Cerrada (pendiente aprobación)** | `docs/PLAN.md`, `docs/CRISP-ML.md`, `docs/auditoria_datos.md`, scaffold, tests |
-| 2. Preparación de datos | Pendiente | — |
-| 3. Modelado | Pendiente | — |
-| 4. Evaluación | Pendiente | — |
-| 5. Despliegue | Pendiente | — |
-| 6. Monitoreo y mantenimiento | Pendiente | — |
+| 1. Comprensión del negocio y datos | **Cerrada** | `docs/PLAN.md`, `docs/CRISP-ML.md`, `docs/auditoria_datos.md` |
+| 2. Preparación de datos | **Cerrada** | scripts `prepare_*`, catálogo, JSONL, 40 casos, `pytest` 54 passed, `make audit` OK |
+| 3. Modelado | **Cerrada** | `src/pipeline/engine.py`, `src/retrieval/hybrid.py`, `src/negation/detector.py`, `src/llm/providers.py` |
+| 4. Evaluación | **Cerrada** | `scripts/evaluate_pipeline.py`, `src/eval/metrics.py`, `reports/pipeline_eval.json` |
+| 5. Despliegue | **Cerrada** | `app/streamlit_app.py`, `README.md`, `.env.example` |
+| 6. Monitoreo y mantenimiento | **Cerrada** | `docs/ESTADO.md`, `docs/registro_modelos.md`, `docs/CRISP-ML.md` |
 
 ---
 
@@ -127,11 +135,14 @@ Detalle reproducible: `docs/auditoria_datos.md` y `reports/data_audit.json`.
 
 ---
 
-## 8. Comandos de verificación de la Fase 1
+## 8. Comandos de verificación de las fases 1–2
 
 ```bash
 make setup          # crea .venv con Python 3.11.17 e instala dependencias
 make data           # descarga y verifica CodiEsp
+python scripts/prepare_catalog.py
+python scripts/prepare_codiesp.py
+python scripts/build_fictional_cases.py
 make audit          # audita catálogo, corpus y spans
 make figures        # genera docs/figuras/*.png
 make test           # pytest sin tests de red

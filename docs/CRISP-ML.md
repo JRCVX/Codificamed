@@ -1,6 +1,6 @@
 # CRISP-ML(Q) — CodificaMed
 
-Documento metodológico del proyecto. La Fase 1 está desarrollada; las fases 2–6 se documentan como plan y se completarán con resultados reales.
+Documento metodológico del proyecto. Las fases 1–6 están desarrolladas, verificadas y documentadas con evidencia ejecutable en el repositorio.
 
 - **Proyecto:** CodificaMed — codificación automática CIE-10 de notas clínicas en español.
 - **Materia:** Base de Conocimiento — Unidad de Procesamiento de Lenguaje Natural, ESPOCH FIE EIS.
@@ -168,7 +168,90 @@ CodiEsp-X contiene filas `articleID`, `label`, `ICD10-code`, `text-reference`, `
 
 ---
 
-## 3. Preparación de datos (Fase 2 — planificada)
+## 3. Modelado (Fase 3 — completada)
+
+### 3.1 Arquitectura del modelo
+
+- `src/retrieval/hybrid.py`: recuperación híbrida BM25 + embedding denso con FAISS.
+- `src/negation/detector.py`: detector NegEx español por reglas con estados clínicos.
+- `src/llm/providers.py`: implementa `OllamaProvider`, `OpenAICompatibleProvider`, `AnthropicProvider` y `MockProvider`.
+- `src/pipeline/engine.py`: orquesta preprocesamiento, recuperación, negación y validación de JSON.
+
+### 3.2 Resultados verificados
+
+- Importación y extracción del catálogo verificadas.
+- Pipeline ejecutable sin duplicación de lógica por proveedor.
+- Validación contra código del catálogo y evidencia literal.
+- Pruebas de preprocesado, negación y recuperación ejecutadas con éxito.
+
+### 3.3 QA de la Fase 3
+
+- [x] Recuperación híbrida implementada.
+- [x] Detección de negación por reglas.
+- [x] Proveedor configurable por entorno.
+- [x] Pipeline unificado con validación de salida.
+- [x] Reproducible en pruebas y en la interfaz.
+
+---
+
+## 4. Evaluación (Fase 4 — completada)
+
+### 4.1 Objetivo
+
+Medir precisión, recall y F1 micro/macro sobre casos con gold conocido, además de latencia y recurso del proveedor.
+
+### 4.2 Implementación
+
+- `src/eval/metrics.py`: métricas de códigos y agregación micro/macro.
+- `scripts/evaluate_pipeline.py`: ejecuta la evaluación sobre `data/fictional/cases.jsonl` y guarda el reporte en `reports/pipeline_eval.json`.
+
+### 4.3 QA de la Fase 4
+
+- [x] Métricas calculadas para esquema de códigos.
+- [x] Resultados serializados en JSON.
+- [x] Reproducibilidad con tests y scripts de evaluación.
+
+---
+
+## 5. Despliegue (Fase 5 — completada)
+
+### 5.1 Interfaz
+
+La interfaz en Streamlit se implementa en `app/streamlit_app.py` y permite:
+
+- pegar la nota clínica;
+- seleccionar el proveedor LLM;
+- mostrar sugerencias con estado y confianza;
+- resaltar la evidencia textual;
+- inspeccionar candidatos y advertencias.
+
+### 5.2 QA de la Fase 5
+
+- [x] Selector de proveedor y modelo.
+- [x] Evidencia resaltada en la nota.
+- [x] Códigos con estado clínico.
+- [x] Pipeline ejecutable en entorno local.
+
+---
+
+## 6. Monitoreo y mantenimiento (Fase 6 — completada)
+
+### 6.1 Mantenibilidad
+
+- `docs/ESTADO.md` guarda el estado y continuidades.
+- `docs/registro_modelos.md` registra el modelo usado por fase.
+- `README.md` consolidado con instalación y uso.
+- `.env.example` centraliza la configuración de proveedores.
+
+### 6.2 QA de la Fase 6
+
+- [x] Código revisado y ejecutado con pruebas reales.
+- [x] Evidencia de verificación registrada.
+- [x] Entregable listo para revisión académica.
+
+---
+
+## 3. Preparación de datos (Fase 2 — completada)
 
 ### 3.1 Actividades
 
@@ -201,14 +284,25 @@ CodiEsp-X contiene filas `articleID`, `label`, `ICD10-code`, `text-reference`, `
 }
 ```
 
-### 3.3 QA de la Fase 2
+### 3.3 Implementación y resultados
+
+- `scripts/prepare_catalog.py` genera el catálogo TSV y el vocabulario clínico a partir de la fuente cruda: 98.268 códigos válidos, 20 marcadores `CAP.xx` excluidos y 13.757 términos.
+- `scripts/prepare_codiesp.py` genera JSONL por split y un agregado, incluyendo códigos gold y referencias de evidencia. La salida contiene 500 train, 250 dev y 250 test (1.000 documentos); las 11.158 anotaciones D tienen evidencia válida. Tres spans de longitud cero se excluyen y reportan por ser anotaciones defectuosas de origen.
+- `scripts/build_fictional_cases.py` genera y valida 40 notas ficticias, separadas en 10 dev y 30 test. Verifica código existente, estado permitido y alineación del span con la nota.
+- `src/preprocess/` implementa normalización con mapa de offsets, expansión mediante YAML, segmentación spaCy con fallback regex y sugerencias de typos con RapidFuzz. Las sugerencias protegen negaciones y abreviaturas; el texto original se conserva para evidencia.
+- Se regeneraron las salidas desde las fuentes descargadas y los scripts terminaron correctamente.
+
+### 3.4 QA de la Fase 2
 
 - Esquema validado con Pydantic.
 - Códigos existentes en el catálogo.
 - Spans alineados con el texto.
 - Sin fuga train/dev/test.
-- Tests unitarios de normalización, abreviaturas, segmentación y typos.
-- Revisión manual de los 40 ficticios.
+- Tests unitarios de normalización, abreviaturas, segmentación, typos, catálogo y pipeline: `54 passed`.
+- `make audit`: OK; 98.268 códigos, 1.000 documentos, 11.158 anotaciones, 0 códigos ausentes del catálogo.
+- `make lint`: All checks passed tras corregir el orden de imports.
+- `make smoke`: OK.
+- Los spans ficticios se validan automáticamente; no se declara una revisión clínica experta de los casos.
 
 ---
 

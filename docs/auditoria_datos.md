@@ -1,6 +1,6 @@
 # Auditoría de datos — CodiEsp
 
-Generado: 2026-11-02T16:38:36.540331+00:00
+Generado: 2026-11-02T17:22:31.571277+00:00
 
 Fuentes: catálogo CIE-10-D (Zenodo 3706838) y corpus gold (Zenodo 3837305), licencia CC-BY-4.0.
 

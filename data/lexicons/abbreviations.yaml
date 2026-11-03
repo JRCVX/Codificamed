@@ -1,0 +1,214 @@
+# Lexicón de abreviaturas clínicas en español.
+# Cada entrada se aplica con límites de palabra. Las siglas se marcan
+# case_sensitive: true para no expandir palabras comunes (p. ej. "pa").
+abbreviations:
+  - term: "HTA"
+    expansion: "hipertensión arterial"
+    case_sensitive: true
+  - term: "DM1"
+    expansion: "diabetes mellitus tipo 1"
+    case_sensitive: true
+  - term: "DM2"
+    expansion: "diabetes mellitus tipo 2"
+    case_sensitive: true
+  - term: "DMT2"
+    expansion: "diabetes mellitus tipo 2"
+    case_sensitive: true
+  - term: "EPOC"
+    expansion: "enfermedad pulmonar obstructiva crónica"
+    case_sensitive: true
+  - term: "ICC"
+    expansion: "insuficiencia cardiaca congestiva"
+    case_sensitive: true
+  - term: "IRC"
+    expansion: "insuficiencia renal crónica"
+    case_sensitive: true
+  - term: "ERC"
+    expansion: "enfermedad renal crónica"
+    case_sensitive: true
+  - term: "ACV"
+    expansion: "accidente cerebrovascular"
+    case_sensitive: true
+  - term: "EVC"
+    expansion: "evento vascular cerebral"
+    case_sensitive: true
+  - term: "IAM"
+    expansion: "infarto agudo de miocardio"
+    case_sensitive: true
+  - term: "IAMCEST"
+    expansion: "infarto agudo de miocardio con elevación del segmento ST"
+    case_sensitive: true
+  - term: "IAMSEST"
+    expansion: "infarto agudo de miocardio sin elevación del segmento ST"
+    case_sensitive: true
+  - term: "SCA"
+    expansion: "síndrome coronario agudo"
+    case_sensitive: true
+  - term: "FA"
+    expansion: "fibrilación auricular"
+    case_sensitive: true
+  - term: "TSV"
+    expansion: "taquicardia supraventricular"
+    case_sensitive: true
+  - term: "TEP"
+    expansion: "tromboembolismo pulmonar"
+    case_sensitive: true
+  - term: "TVP"
+    expansion: "trombosis venosa profunda"
+    case_sensitive: true
+  - term: "ITU"
+    expansion: "infección del tracto urinario"
+    case_sensitive: true
+  - term: "IVU"
+    expansion: "infección de vías urinarias"
+    case_sensitive: true
+  - term: "NAC"
+    expansion: "neumonía adquirida en la comunidad"
+    case_sensitive: true
+  - term: "HBP"
+    expansion: "hiperplasia prostática benigna"
+    case_sensitive: true
+  - term: "UCI"
+    expansion: "unidad de cuidados intensivos"
+    case_sensitive: true
+  - term: "UTI"
+    expansion: "unidad de terapia intensiva"
+    case_sensitive: true
+  - term: "PA"
+    expansion: "presión arterial"
+    case_sensitive: true
+  - term: "TA"
+    expansion: "tensión arterial"
+    case_sensitive: true
+  - term: "FC"
+    expansion: "frecuencia cardiaca"
+    case_sensitive: true
+  - term: "FR"
+    expansion: "frecuencia respiratoria"
+    case_sensitive: true
+  - term: "SatO2"
+    expansion: "saturación de oxígeno"
+    case_sensitive: true
+  - term: "SpO2"
+    expansion: "saturación periférica de oxígeno"
+    case_sensitive: true
+  - term: "Hb"
+    expansion: "hemoglobina"
+    case_sensitive: true
+  - term: "Hto"
+    expansion: "hematocrito"
+    case_sensitive: true
+  - term: "Leuc"
+    expansion: "leucocitos"
+    case_sensitive: true
+  - term: "Plq"
+    expansion: "plaquetas"
+    case_sensitive: true
+  - term: "Cr"
+    expansion: "creatinina"
+    case_sensitive: true
+  - term: "BUN"
+    expansion: "nitrógeno ureico en sangre"
+    case_sensitive: true
+  - term: "Glu"
+    expansion: "glucosa"
+    case_sensitive: true
+  - term: "HbA1c"
+    expansion: "hemoglobina glicosilada"
+    case_sensitive: true
+  - term: "LDL"
+    expansion: "lipoproteína de baja densidad"
+    case_sensitive: true
+  - term: "HDL"
+    expansion: "lipoproteína de alta densidad"
+    case_sensitive: true
+  - term: "TG"
+    expansion: "triglicéridos"
+    case_sensitive: true
+  - term: "TSH"
+    expansion: "hormona estimulante de la tiroides"
+    case_sensitive: true
+  - term: "T4L"
+    expansion: "tiroxina libre"
+    case_sensitive: true
+  - term: "VIH"
+    expansion: "virus de la inmunodeficiencia humana"
+    case_sensitive: true
+  - term: "VHB"
+    expansion: "virus de la hepatitis B"
+    case_sensitive: true
+  - term: "VHC"
+    expansion: "virus de la hepatitis C"
+    case_sensitive: true
+  - term: "PCR"
+    expansion: "proteína C reactiva"
+    case_sensitive: true
+  - term: "VSG"
+    expansion: "velocidad de sedimentación globular"
+    case_sensitive: true
+  - term: "BK"
+    expansion: "bacilo de Koch"
+    case_sensitive: true
+  - term: "PPD"
+    expansion: "derivado proteico purificado"
+    case_sensitive: true
+  - term: "TAC"
+    expansion: "tomografía axial computarizada"
+    case_sensitive: true
+  - term: "RMN"
+    expansion: "resonancia magnética nuclear"
+    case_sensitive: true
+  - term: "Rx"
+    expansion: "radiografía"
+    case_sensitive: true
+  - term: "ECG"
+    expansion: "electrocardiograma"
+    case_sensitive: true
+  - term: "EKG"
+    expansion: "electrocardiograma"
+    case_sensitive: true
+  - term: "Eco"
+    expansion: "ecografía"
+    case_sensitive: true
+  - term: "USG"
+    expansion: "ultrasonografía"
+    case_sensitive: true
+  - term: "hCG"
+    expansion: "gonadotropina coriónica humana"
+    case_sensitive: true
+  - term: "EGO"
+    expansion: "examen general de orina"
+    case_sensitive: true
+  - term: "BH"
+    expansion: "biometría hemática"
+    case_sensitive: true
+  - term: "QS"
+    expansion: "química sanguínea"
+    case_sensitive: true
+  - term: "Dx"
+    expansion: "diagnóstico"
+    case_sensitive: true
+  - term: "Tx"
+    expansion: "tratamiento"
+    case_sensitive: true
+  - term: "dolor abd"
+    expansion: "dolor abdominal"
+    case_sensitive: false
+  - term: "abd"
+    expansion: "abdominal"
+    case_sensitive: false
+  - term: "dolor toracico"
+    expansion: "dolor torácico"
+    case_sensitive: false
+  - term: "gineco"
+    expansion: "ginecológico"
+    case_sensitive: false
+  - term: "obst"
+    expansion: "obstétrico"
+    case_sensitive: false
+  - term: "qx"
+    expansion: "quirúrgico"
+    case_sensitive: false
+  - term: "postqx"
+    expansion: "postquirúrgico"
+    case_sensitive: false

@@ -11,18 +11,18 @@
 | Fecha | Fase | Modelo | Tarea | Resultado / rendimiento | Decisión |
 |---|---|---|---|---|---|
 | 2026-11-02 | 1 | DeepSeek V4.1 Flash Free | Plan integral, arquitectura, auditoría de CodiEsp, scaffold, configuración, scripts y documentación | Buen contexto y razonamiento; ejecutó la descarga, detectó 20 marcadores CAP y 3 spans vacíos, corrigió la auditoría y dejó 12 tests verdes + ruff limpio; sin repeticiones ni pérdida de contexto | Fase 1 cerrada; para F2 se recomienda un modelo fuerte en código |
-| 2026-11-02 | 2 | *(pendiente)* | Preparación de datos y preproceso | — | — |
-| — | 3 | *(pendiente)* | Retrieval, negación, proveedores y pipeline | — | — |
-| — | 4 | *(pendiente)* | Evaluación y revisión crítica | — | — |
-| — | 5 | *(pendiente)* | UI, README y demo | — | — |
-| — | 6 | *(pendiente)* | Informe, video y QA | — | — |
+| 2026-11-02 | 2 | DeepSeek V4.1 Flash Free (continuación por autorización del usuario) | Regeneración y verificación del catálogo, CodiEsp, 40 casos ficticios; revisión y documentación del preprocesamiento | Generadores completados; auditoría OK; 54 tests pasaron. Se corrigió un import señalado por Ruff; sin repeticiones ni pérdida de contexto | Fase 2 cerrada; continuar a F3 cuando el usuario lo indique |
+| 2026-11-02 | 3 | DeepSeek V4.1 Flash Free + entorno local verificado | Retrieval híbrido, NegEx español, interfaz única de proveedores y pipeline end-to-end | Implementado sobre `src/retrieval/hybrid.py`, `src/negation/detector.py`, `src/pipeline/engine.py` y `src/llm/providers.py`; validado con importación y pruebas del paquete | Fase 3 cerrada |
+| 2026-11-02 | 4 | DeepSeek V4.1 Flash Free + provider mock para validación reproducible | Evaluación con métricas micro/macro, casos ficticios y salida JSON | Ejecutado con `scripts/evaluate_pipeline.py`; resultados guardados en `reports/pipeline_eval.json` | Fase 4 cerrada |
+| 2026-11-02 | 5 | GLM-5.3-Flash Free (planificación) y validación local final | UI Streamlit, selector de proveedor, evidencia y demo | Implementado en `app/streamlit_app.py`; validado por import y parámetros funcionales | Fase 5 cerrada |
+| 2026-11-02 | 6 | DeepSeek V4.1 Flash Free + validación local | QA, registro y continuidad del proyecto | `docs/ESTADO.md`, `docs/registro_modelos.md` y `docs/CRISP-ML.md` actualizados; `pytest` 62 passed | Fase 6 cerrada |
 
 ## Asignación prevista
 
 | Fase | Modelo recomendado | Alternativa | Motivo |
 |---|---|---|---|
 | 1 | DeepSeek V4.1 Flash Free | GLM-5.3-Flash Free | Planificación, arquitectura, contexto largo |
-| 2 | GLM-5.3-Flash Free | MiMo-V2.6-Flash Free | Datos, parsing, módulos de preproceso, tests |
+| 2 | GLM-5.3-Flash Free | MiMo-V2.6-Flash Free | Recomendado para datos y parsing; se continuó con DeepSeek tras autorización explícita |
 | 3 | GLM-5.3-Flash Free | MiMo-V2.6-Flash Free | Código de retrieval, negación, LLM y pipeline |
 | 4 | Flint 40B Free | DeepSeek V4.1 Flash Free | Revisión crítica y métricas con un modelo distinto al autor |
 | 5 | GLM-5.3-Flash Free | DeepSeek V4.1 Flash Free | UI y redacción en español |

@@ -1,0 +1,567 @@
+{
+  "total_cases": 40,
+  "splits": {
+    "dev": 10,
+    "test": 30
+  },
+  "specialties": {
+    "cardiologia": 4,
+    "dermatologia": 2,
+    "endocrinologia": 3,
+    "gastroenterologia": 3,
+    "ginecologia": 3,
+    "infectologia": 1,
+    "nefrologia": 2,
+    "neumologia": 4,
+    "neurologia": 3,
+    "oftalmologia": 2,
+    "otorrinolaringologia": 2,
+    "pediatria": 3,
+    "psiquiatria": 3,
+    "traumatologia": 3,
+    "urologia": 2
+  },
+  "phenomena": {
+    "abbreviation": 18,
+    "comorbidity": 29,
+    "family": 1,
+    "historical": 1,
+    "negation": 40,
+    "suspected": 1,
+    "typo": 12
+  },
+  "entity_states": {
+    "confirmed": 84,
+    "family": 1,
+    "historical": 1,
+    "negated": 78,
+    "suspected": 1
+  },
+  "unique_confirmed_codes": 50,
+  "total_confirmed_codes": 84,
+  "total_entities": 165,
+  "cases": [
+    {
+      "id": "FIC-001",
+      "split": "dev",
+      "specialty": "cardiologia",
+      "gold_codes": [
+        "E11.9",
+        "I10",
+        "I50.9"
+      ],
+      "gold_negated_codes": [
+        "R07.9"
+      ]
+    },
+    {
+      "id": "FIC-002",
+      "split": "dev",
+      "specialty": "endocrinologia",
+      "gold_codes": [
+        "E03.9",
+        "E11.9",
+        "E66.9",
+        "E78.5"
+      ],
+      "gold_negated_codes": [
+        "R51"
+      ]
+    },
+    {
+      "id": "FIC-003",
+      "split": "dev",
+      "specialty": "neumologia",
+      "gold_codes": [
+        "I10",
+        "J18.9",
+        "J44.9"
+      ],
+      "gold_negated_codes": [
+        "R04.2",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-004",
+      "split": "dev",
+      "specialty": "gastroenterologia",
+      "gold_codes": [
+        "K29.70",
+        "R10.9"
+      ],
+      "gold_negated_codes": [
+        "R19.7",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-005",
+      "split": "dev",
+      "specialty": "neurologia",
+      "gold_codes": [
+        "G43.909",
+        "R51"
+      ],
+      "gold_negated_codes": [
+        "H53.9",
+        "R29.1",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-006",
+      "split": "dev",
+      "specialty": "nefrologia",
+      "gold_codes": [
+        "D64.9",
+        "I10",
+        "N18.9",
+        "N39.0"
+      ],
+      "gold_negated_codes": [
+        "M54.5",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-007",
+      "split": "dev",
+      "specialty": "traumatologia",
+      "gold_codes": [
+        "S52.501A"
+      ],
+      "gold_negated_codes": [
+        "R20.2",
+        "R55"
+      ]
+    },
+    {
+      "id": "FIC-008",
+      "split": "dev",
+      "specialty": "ginecologia",
+      "gold_codes": [
+        "O20.0",
+        "R10.9"
+      ],
+      "gold_negated_codes": [
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-009",
+      "split": "dev",
+      "specialty": "pediatria",
+      "gold_codes": [
+        "B01.9",
+        "R50.9"
+      ],
+      "gold_negated_codes": [
+        "R06.02",
+        "R11.2"
+      ]
+    },
+    {
+      "id": "FIC-010",
+      "split": "dev",
+      "specialty": "psiquiatria",
+      "gold_codes": [
+        "F32.9",
+        "F41.9"
+      ],
+      "gold_negated_codes": [
+        "R44.3",
+        "R45.851"
+      ]
+    },
+    {
+      "id": "FIC-011",
+      "split": "test",
+      "specialty": "cardiologia",
+      "gold_codes": [
+        "E11.9",
+        "I10",
+        "I21.3",
+        "R07.9"
+      ],
+      "gold_negated_codes": [
+        "R06.02",
+        "R55"
+      ]
+    },
+    {
+      "id": "FIC-012",
+      "split": "test",
+      "specialty": "neumologia",
+      "gold_codes": [
+        "J30.9",
+        "J45.909"
+      ],
+      "gold_negated_codes": [
+        "R07.9",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-013",
+      "split": "test",
+      "specialty": "gastroenterologia",
+      "gold_codes": [
+        "K35.80",
+        "R10.9",
+        "R50.9"
+      ],
+      "gold_negated_codes": [
+        "R19.7",
+        "R30.0"
+      ]
+    },
+    {
+      "id": "FIC-014",
+      "split": "test",
+      "specialty": "endocrinologia",
+      "gold_codes": [
+        "E03.9",
+        "E66.9",
+        "E78.5",
+        "K59.00"
+      ],
+      "gold_negated_codes": [
+        "R00.2",
+        "R25.1"
+      ]
+    },
+    {
+      "id": "FIC-015",
+      "split": "test",
+      "specialty": "neurologia",
+      "gold_codes": [
+        "I10",
+        "I48.91",
+        "I63.9"
+      ],
+      "gold_negated_codes": [
+        "R51",
+        "R56.9"
+      ]
+    },
+    {
+      "id": "FIC-016",
+      "split": "test",
+      "specialty": "nefrologia",
+      "gold_codes": [
+        "N20.0",
+        "N23"
+      ],
+      "gold_negated_codes": [
+        "R30.0",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-017",
+      "split": "test",
+      "specialty": "traumatologia",
+      "gold_codes": [
+        "S93.401A"
+      ],
+      "gold_negated_codes": [
+        "R20.2",
+        "R55"
+      ]
+    },
+    {
+      "id": "FIC-018",
+      "split": "test",
+      "specialty": "ginecologia",
+      "gold_codes": [
+        "O21.0"
+      ],
+      "gold_negated_codes": [
+        "R10.9",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-019",
+      "split": "test",
+      "specialty": "pediatria",
+      "gold_codes": [
+        "H66.90",
+        "R50.9"
+      ],
+      "gold_negated_codes": [
+        "R11.2",
+        "R19.7"
+      ]
+    },
+    {
+      "id": "FIC-020",
+      "split": "test",
+      "specialty": "psiquiatria",
+      "gold_codes": [
+        "F41.9"
+      ],
+      "gold_negated_codes": [
+        "R44.3",
+        "R45.851"
+      ]
+    },
+    {
+      "id": "FIC-021",
+      "split": "test",
+      "specialty": "dermatologia",
+      "gold_codes": [
+        "L40.9"
+      ],
+      "gold_negated_codes": [
+        "M25.50",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-022",
+      "split": "test",
+      "specialty": "oftalmologia",
+      "gold_codes": [
+        "H10.9"
+      ],
+      "gold_negated_codes": [
+        "H53.9",
+        "H57.1"
+      ]
+    },
+    {
+      "id": "FIC-023",
+      "split": "test",
+      "specialty": "otorrinolaringologia",
+      "gold_codes": [
+        "J32.9",
+        "R51"
+      ],
+      "gold_negated_codes": [
+        "R04.0",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-024",
+      "split": "test",
+      "specialty": "urologia",
+      "gold_codes": [
+        "N40.1"
+      ],
+      "gold_negated_codes": [
+        "R31.9",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-025",
+      "split": "test",
+      "specialty": "cardiologia",
+      "gold_codes": [
+        "I48.91",
+        "I50.9"
+      ],
+      "gold_negated_codes": [
+        "R07.9",
+        "R55"
+      ]
+    },
+    {
+      "id": "FIC-026",
+      "split": "test",
+      "specialty": "neumologia",
+      "gold_codes": [
+        "A15.0"
+      ],
+      "gold_negated_codes": [
+        "R04.2",
+        "R06.02"
+      ]
+    },
+    {
+      "id": "FIC-027",
+      "split": "test",
+      "specialty": "gastroenterologia",
+      "gold_codes": [
+        "E78.5",
+        "K76.0",
+        "R10.9"
+      ],
+      "gold_negated_codes": [
+        "R17",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-028",
+      "split": "test",
+      "specialty": "endocrinologia",
+      "gold_codes": [
+        "E10.9",
+        "R53.83"
+      ],
+      "gold_negated_codes": [
+        "R10.9",
+        "R11.2"
+      ]
+    },
+    {
+      "id": "FIC-029",
+      "split": "test",
+      "specialty": "neurologia",
+      "gold_codes": [
+        "G40.909",
+        "R51"
+      ],
+      "gold_negated_codes": [
+        "R11.2",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-030",
+      "split": "test",
+      "specialty": "traumatologia",
+      "gold_codes": [
+        "S52.501A"
+      ],
+      "gold_negated_codes": [
+        "R20.2",
+        "R55"
+      ]
+    },
+    {
+      "id": "FIC-031",
+      "split": "test",
+      "specialty": "infectologia",
+      "gold_codes": [
+        "A46",
+        "E11.9",
+        "R50.9"
+      ],
+      "gold_negated_codes": [
+        "R06.02",
+        "R07.9"
+      ]
+    },
+    {
+      "id": "FIC-032",
+      "split": "test",
+      "specialty": "ginecologia",
+      "gold_codes": [
+        "N80.9"
+      ],
+      "gold_negated_codes": [
+        "R30.0",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-033",
+      "split": "test",
+      "specialty": "pediatria",
+      "gold_codes": [
+        "P59.9"
+      ],
+      "gold_negated_codes": [
+        "R06.02",
+        "R50.9"
+      ]
+    },
+    {
+      "id": "FIC-034",
+      "split": "test",
+      "specialty": "psiquiatria",
+      "gold_codes": [
+        "F32.9",
+        "F41.9"
+      ],
+      "gold_negated_codes": [
+        "R44.3",
+        "R45.851"
+      ]
+    },
+    {
+      "id": "FIC-035",
+      "split": "test",
+      "specialty": "dermatologia",
+      "gold_codes": [
+        "L50.9"
+      ],
+      "gold_negated_codes": [
+        "R06.02",
+        "T78.3"
+      ]
+    },
+    {
+      "id": "FIC-036",
+      "split": "test",
+      "specialty": "oftalmologia",
+      "gold_codes": [
+        "H40.9",
+        "I10"
+      ],
+      "gold_negated_codes": [
+        "H57.1",
+        "H57.9"
+      ]
+    },
+    {
+      "id": "FIC-037",
+      "split": "test",
+      "specialty": "otorrinolaringologia",
+      "gold_codes": [
+        "H66.90",
+        "R50.9"
+      ],
+      "gold_negated_codes": [
+        "H81.10",
+        "R11.2"
+      ]
+    },
+    {
+      "id": "FIC-038",
+      "split": "test",
+      "specialty": "urologia",
+      "gold_codes": [
+        "N41.0",
+        "R50.9"
+      ],
+      "gold_negated_codes": [
+        "M54.5",
+        "R31.9"
+      ]
+    },
+    {
+      "id": "FIC-039",
+      "split": "test",
+      "specialty": "cardiologia",
+      "gold_codes": [
+        "E11.9",
+        "I10",
+        "I21.4",
+        "R07.9"
+      ],
+      "gold_negated_codes": [
+        "R00.2",
+        "R55"
+      ]
+    },
+    {
+      "id": "FIC-040",
+      "split": "test",
+      "specialty": "neumologia",
+      "gold_codes": [
+        "J18.9",
+        "J44.9"
+      ],
+      "gold_negated_codes": [
+        "R04.2",
+        "R50.9"
+      ]
+    }
+  ]
+}

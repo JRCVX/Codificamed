@@ -8,24 +8,26 @@ CodificaMed es un pipeline de PLN con recuperación aumentada por generación (R
 
 ```text
 Nota → preproceso → negación/estado → recuperación híbrida → prompt → LLM
-     → validación → agregación → UI/CLI/evaluación
+     → validación → agregación → API FastAPI → frontend web / Streamlit / CLI
 ```
 
 ## 2. Componentes
 
-| Componente | Responsabilidad | Archivos previstos |
+| Componente | Responsabilidad | Implementación |
 |---|---|---|
 | Configuración | Leer `.env`, validar tipos, resolver rutas | `src/config.py` |
 | Modelos de dominio | Catálogo, candidatos, evidencia, predicción | `src/catalog/models.py` |
 | Preproceso | Normalizar, expandir abreviaturas, segmentar, tolerar typos | `src/preprocess/` |
 | Catálogo | Cargar y validar los 98.268 códigos válidos | `src/catalog/loader.py` |
-| Recuperación | Embeddings, FAISS, BM25, fusión RRF | `src/retrieval/` |
-| Negación | Disparadores, alcance y estados clínicos | `src/negation/` |
+| Recuperación | Embeddings E5, FAISS, BM25, fusión RRF y evaluación recall@k | `src/retrieval/hybrid.py`, `scripts/build_index.py`, `scripts/evaluate_retrieval.py` |
+| Negación | Disparadores y estado por cláusula con reglas españolas | `src/negation/detector.py` |
 | NER | Entidades clínicas opcionales | `src/ner/` |
-| LLM | Interfaz única y proveedores | `src/llm/` |
-| Pipeline | Orquestación, evidencia, agregación | `src/pipeline/` |
+| LLM | Interfaz única y adaptadores HTTP Ollama/OpenAI-compatible/Anthropic/Mock | `src/llm/base.py`, `src/llm/providers.py` |
+| Pipeline | Orquestación, evidencia literal, validación de catálogo y estado | `src/pipeline/engine.py` |
 | Evaluación | Métricas, datasets, reportes | `src/eval/` |
-| Interfaz | Streamlit | `app/streamlit_app.py` |
+| API | FastAPI, endpoints, serialización y orchestración | `backend/main.py`, `backend/services/` |
+| Frontend web | HTML/CSS/JS estático con interacción directa a la API | `web/index.html`, `web/static/` |
+| Interfaz legacy | Streamlit para demos rápidas | `app/streamlit_app.py` |
 
 ## 3. Flujo de datos
 
@@ -33,11 +35,11 @@ Nota → preproceso → negación/estado → recuperación híbrida → prompt �
 2. **Normalización:** se preserva el texto original y se construye un mapa de offsets.
 3. **Abreviaturas:** se expanden términos como `HTA`, `DM2`, `dolor abd` sin perder la mención original.
 4. **Segmentación:** oraciones con offsets para asociar evidencia y negación.
-5. **Negación:** cada mención recibe un estado; las negaciones duras no se codifican.
+5. **Negación:** reglas en español clasifican cláusulas; los alcances cambian en conjunciones adversativas como «pero».
 6. **Recuperación:** BM25 y FAISS devuelven candidatos; RRF fusiona y corta a top-k.
-7. **Prompt:** se envía la nota, los candidatos y las anotaciones de negación.
+7. **Prompt:** se envía la nota, los candidatos y las anotaciones de estado por cláusula.
 8. **LLM:** devuelve JSON con códigos, estado, evidencia, confianza y justificación.
-9. **Validación:** se rechaza todo código que no esté en el catálogo o en los candidatos; se alinea la evidencia; se resuelven conflictos a favor de la regla de negación.
+9. **Validación:** se rechaza todo código que no esté en el catálogo o en los candidatos y toda evidencia no literal; las reglas de estado prevalecen cuando marcan una negación, sospecha o antecedente.
 10. **Salida:** `Prediction` con códigos, candidatos, latencia, uso y warnings.
 
 ## 4. Interfaz `LLMProvider`
@@ -56,10 +58,10 @@ class LLMProvider(ABC):
 ```
 
 - `OllamaProvider`: HTTP a `/api/chat`.
-- `OpenAICompatibleProvider`: SDK `openai` con `base_url` configurable.
-- `AnthropicProvider`: SDK `anthropic`.
+- `OpenAICompatibleProvider`: HTTP con endpoint `/chat/completions` y `base_url` configurable.
+- `AnthropicProvider`: HTTP al endpoint Messages de Anthropic.
 - `MockProvider`: respuestas deterministas para tests y demo sin red.
-- `factory.py`: elige el proveedor por `LLM_PROVIDER`; valida la clave requerida.
+- `create_provider`: elige el proveedor por `LLM_PROVIDER`; valida la clave requerida.
 
 Ningún proveedor construye prompts ni parsea la salida por su cuenta: eso vive en `prompts.py` y `schemas.py`.
 
@@ -77,8 +79,10 @@ Ningún proveedor construye prompts ni parsea la salida por su cuenta: eso vive 
 
 ## 6. Despliegue
 
-- **Local:** `uv` + Python 3.11, Streamlit, Ollama.
-- **API:** cualquier endpoint compatible con OpenAI o Anthropic.
+- **Local:** `uv` + Python 3.11, Ollama y FastAPI.
+- **Frontend web:** HTML/CSS/JS servido por FastAPI en `web/`.
+- **API:** endpoints REST de FastAPI que consumen la lógica central en `src/`.
+- **Legacy UI:** Streamlit para demostraciones rápidas y validación local.
 - **Datos:** CodiEsp descargado por script; índice FAISS construido localmente.
 - **Reproducibilidad:** versiones fijadas, semillas, cache de respuestas y manifiesto de datos.
 
@@ -97,15 +101,15 @@ Ningún proveedor construye prompts ni parsea la salida por su cuenta: eso vive 
 ## 8. Diagrama de despliegue
 
 ```text
-┌──────────────────────┐        ┌──────────────────────────┐
-│ Navegador            │  HTTP  │ Streamlit (Python 3.11)   │
-│ usuario/codificador  │◄──────►│ app/streamlit_app.py      │
-└──────────────────────┘        └────────────┬─────────────┘
+┌──────────────────────┐        ┌──────────────────────────────┐
+│ Navegador            │  HTTP  │ FastAPI backend               │
+│ HTML/CSS/JS         │◄──────►│ backend/main.py               │
+└──────────────────────┘        └────────────┬─────────────────┘
                                              │
-                       ┌─────────────────────┼─────────────────────┐
-                       ▼                     ▼                     ▼
+                         ┌───────────────┼────────────────────┐
+                         ▼               ▼                    ▼
              ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
-             │ FAISS + catálogo │  │ Ollama local     │  │ API externa      │
-             │ data/indexes/    │  │ /api/chat        │  │ OpenAI/Anthropic │
+             │ Core PLN / RAG   │  │ Ollama local     │  │ Legacy Streamlit │
+             │ src/             │  │ /api/chat        │  │ app/streamlit    │
              └──────────────────┘  └──────────────────┘  └──────────────────┘
 ```

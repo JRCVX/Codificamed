@@ -2,7 +2,7 @@
 
 - **Versión:** 1.0
 - **Fecha:** 2026-11-02
-- **Estado:** aprobado para ejecutar la Fase 1 (respuesta del usuario: “continuar”)
+- **Estado:** Fases 1 y 2 ejecutadas y verificadas; autorización de continuación recibida
 - **Materia:** Base de Conocimiento — PLN, ESPOCH FIE EIS
 
 ## 1. Objetivo
@@ -44,7 +44,7 @@ Prototipo que recibe una nota clínica en español y sugiere códigos CIE-10, mo
 | Fase | Entregables | QA |
 |---|---|---|
 | 1. Comprensión del negocio y datos | Plan, `ESTADO.md`, `CRISP-ML.md` §1-2, auditoría, arquitectura, scaffold | Licencia, descarga reproducible, sin secretos |
-| 2. Preparación de datos | Descarga, catálogo procesado, 40 ficticios, preproceso, tests | Códigos válidos, spans alineados, sin fuga |
+| 2. Preparación de datos | Descarga, catálogo procesado, CodiEsp JSONL, 40 ficticios, preproceso, tests | Códigos válidos, spans alineados, splits separados; auditoría y pruebas verdes |
 | 3. Modelado | Embeddings, FAISS, BM25, negación, NER opcional, LLM, pipeline | Recall@30, contratos, JSON válido |
 | 4. Evaluación | Métricas, ablaciones, comparación local/API, errores | Reproducible, IC, ambos proveedores |
 | 5. Despliegue | Streamlit, README, `.env.example`, demo | Entorno limpio, selector, evidencia |

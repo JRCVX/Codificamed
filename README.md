@@ -1,103 +1,187 @@
 # CodificaMed
 
-Prototipo académico de **codificación automática CIE-10 de notas clínicas en español** usando PLN, recuperación aumentada por generación (RAG) y detección de negación.
+Proyecto académico para la codificación automática de notas clínicas en español con CIE-10, usando procesamiento de lenguaje natural, recuperación híbrida y detección de negación.
 
-> **Estado:** Fase 1 de CRISP-ML(Q) — planificación, auditoría de datos y esqueleto reproducible. El pipeline funcional, la interfaz y la evaluación se construyen en las fases 2–6.
+## Descripción general
 
-## Problema
+CodificaMed recibe una nota clínica en texto libre y propone códigos CIE-10 con:
 
-En Ecuador y en muchos sistemas de salud, cada atención clínica se codifica manualmente con CIE-10 a partir de notas en texto libre. Las abreviaturas (`HTA`, `DM2`, `dolor abd`), los errores de tipeo y las negaciones (`niega fiebre`, `se descarta neumonía`) hacen que el proceso sea lento y propenso a errores. Un código mal asignado genera glosas, retrasa la facturación y distorsiona las estadísticas de morbilidad.
+- evidencia textual que justifica cada código;
+- estado clínico del diagnóstico (confirmado, negado, sospechoso, antecedente o familiar);
+- candidatos recuperados desde el catálogo CIE-10;
+- soporte para proveedores LLM locales o remotos, con configuración por entorno.
 
-## Objetivo
-
-Recibir una nota clínica y sugerir códigos CIE-10, mostrando:
-
-- la **frase de evidencia** que justifica cada código;
-- el **estado** del diagnóstico: confirmado, negado, sospechoso, antecedente o familiar;
-- los **candidatos recuperados** del catálogo;
-- el **proveedor LLM** utilizado (Ollama local o API externa), cambiable por configuración.
-
-El codificador humano valida; el sistema no reemplaza su criterio clínico.
-
-## Decisiones principales
-
-| Componente | Elección |
-|---|---|
-| Datos | CodiEsp (CLEF eHealth 2020, CC-BY-4.0) + 40 casos ficticios (Fase 2) |
-| Terminología | ICD-10-CM español 2018 de CodiEsp (diagnósticos) |
-| Preproceso | Normalización, abreviaturas, segmentación y tolerancia a typos |
-| Representación | `intfloat/multilingual-e5-small` (benchmark con `BAAI/bge-m3`) |
-| Recuperación | BM25 + FAISS, fusión RRF |
-| Negación | NegEx adaptado al español, por reglas de alcance |
-| LLM | Interfaz `LLMProvider`: Ollama, OpenAI-compatible, Anthropic y Mock |
-| Interfaz | Streamlit |
-| Pruebas | pytest; tests de red marcados y omitidos por defecto |
-
-## Estructura
-
-```text
-app/                 Interfaz Streamlit
-src/preprocess/      Normalización, abreviaturas, segmentación, typos
-src/catalog/         Carga y validación del catálogo CIE-10
-src/retrieval/       Embeddings, FAISS, BM25 y recuperación híbrida
-src/negation/        Detección de negación y estados clínicos
-src/ner/             NER clínico opcional
-src/llm/             Interfaz y proveedores LLM
-src/pipeline/        Orquestación, evidencia y agregación
-src/eval/            Métricas, datasets y reportes
-scripts/             Descarga, auditoría, índice, evaluación
-tests/               Pruebas unitarias e integración
-docs/                CRISP-ML(Q), estado, arquitectura, informe y guion
-data/                Catálogo, casos ficticios, datos crudos e índices
-```
+El sistema está pensado como ayuda de decisión para codificadores humanos, no como sustituto de su criterio clínico.
 
 ## Requisitos
 
-- Linux/macOS (probado en Linux)
-- Python **3.11** (se instala con `uv`)
-- `uv` >= 0.13
-- Ollama (para el proveedor local)
-- Opcional: clave de una API compatible con OpenAI o de Anthropic
+- Linux o macOS
+- Python 3.11
+- `uv` instalado
+- Ollama funcionando localmente o un servidor remoto con acceso al modelo elegido
+- Conexión a internet para descargar datos y dependencias
+
+## Estructura del proyecto
+
+```text
+app/                 Interfaz Streamlit
+backend/             API FastAPI + servicios
+frontend/            Frontend web estático
+src/                 Código fuente principal
+scripts/             Descargas, preparación de datos e índices
+data/                Catálogo, corpus y archivos generados
+reports/             Evaluaciones y métricas
+tests/               Pruebas automatizadas
+docs/                Documentación técnica y metodológica
+```
 
 ## Instalación
+
+1. Clona el repositorio:
 
 ```bash
 git clone <URL_DEL_REPOSITORIO>
 cd "PLN CodificaMed"
+```
 
-# 1. Crear entorno Python 3.11 e instalar dependencias fijadas
+2. Crea el entorno virtual e instala dependencias:
+
+```bash
 make setup
+```
 
-# 2. Configurar variables de entorno
+Este comando crea `.venv` y ejecuta la instalación desde `requirements-dev.txt` usando Python 3.11.
+
+3. Configura las variables de entorno:
+
+```bash
 cp .env.example .env
-# editar .env: proveedor, modelo y claves (nunca subir .env)
+```
 
-# 3. Descargar y verificar CodiEsp
+Edita el archivo `.env` y define al menos:
+
+```env
+LLM_PROVIDER=ollama
+LLM_MODEL=mistral
+OLLAMA_BASE_URL=http://localhost:11434
+```
+
+También puedes usar OpenAI, OpenRouter, Gemini o Anthropic, según tus credenciales.
+
+4. Descarga y prepara los datos:
+
+```bash
 make data
-
-# 4. Auditar los datos
 make audit
+```
 
-# 5. Ejecutar pruebas
+5. Prepara el catálogo y los casos de prueba de ejemplo:
+
+```bash
+.venv/bin/python scripts/prepare_catalog.py
+.venv/bin/python scripts/prepare_codiesp.py
+.venv/bin/python scripts/build_fictional_cases.py
+```
+
+6. Genera el índice FAISS para la recuperación:
+
+```bash
+make index
+```
+
+7. Verifica que el proyecto arranca correctamente:
+
+```bash
+make smoke
 make test
 ```
 
-> **Nota sobre PyTorch:** el proyecto usa la rueda CPU de PyTorch para evitar
-> dependencias CUDA pesadas y problemas de driver. `make setup` ya incluye
-> `--index-strategy unsafe-best-match`, necesario porque `requirements.txt`
-> declara el índice oficial de PyTorch como índice adicional. Si instalas
-> manualmente con `uv`, usa el mismo flag.
+## Ejecutar la aplicación
 
-## Uso
-
-La interfaz y el pipeline se habilitan en las fases 3–5:
+### Opción 1: Streamlit (interfaz web simple)
 
 ```bash
-# Fase 5
 make app
 ```
 
-Mientras tanto, la Fase 1 se verifica con:
+Luego abre la URL indicada por Streamlit, normalmente:
+
+```text
+http://localhost:8501
+```
+
+### Opción 2: API FastAPI + frontend web
+
+```bash
+make api
+```
+
+La API queda disponible en:
+
+```text
+http://localhost:8010
+```
+
+## Uso rápido
+
+Puedes probar la lógica del preprocesado desde Python:
+
+```python
+from src.preprocess import ClinicalPreprocessor
+
+note = ClinicalPreprocessor().preprocess("Paciente con HTA. Niega fiebre.")
+print(note.retrieval_text)
+print(note.sentences)
+```
+
+También puedes evaluar la recuperación del sistema:
+
+```bash
+make retrieval-eval
+```
+
+Esto genera resultados en `reports/retrieval_dev.json`.
+
+## Variables de entorno importantes
+
+El archivo `.env` puede incluir configuraciones como:
+
+```env
+LLM_PROVIDER=ollama
+LLM_MODEL=mistral
+LLM_TEMPERATURE=0.0
+LLM_MAX_TOKENS=1200
+PORT=8010
+HOST=0.0.0.0
+OLLAMA_BASE_URL=http://localhost:11434
+```
+
+Si usas Ollama local, asegúrate de que el modelo exista. Por ejemplo:
+
+```bash
+ollama pull mistral
+ollama serve
+```
+
+## Comandos útiles
+
+```bash
+make help
+make setup
+make data
+make audit
+make index
+make test
+make lint
+make smoke
+make app
+make api
+make clean
+```
+
+## Verificación y pruebas
+
+Se recomienda ejecutar:
 
 ```bash
 make smoke
@@ -105,51 +189,20 @@ make test
 make lint
 ```
 
-## Cambio de proveedor LLM
+## Documentación adicional
 
-Toda la lógica está detrás de `src/llm/base.py` (`LLMProvider`). El proveedor se elige **solo** con `.env`:
-
-```bash
-# Ollama local
-LLM_PROVIDER=ollama
-LLM_MODEL=qwen3:8b
-
-# API compatible con OpenAI (OpenAI, OpenRouter, Groq, vLLM...)
-LLM_PROVIDER=openai
-OPENAI_API_KEY=...
-OPENAI_BASE_URL=https://api.openai.com/v1
-OPENAI_MODEL=gpt-4o-mini
-
-# Anthropic
-LLM_PROVIDER=anthropic
-ANTHROPIC_API_KEY=...
-ANTHROPIC_MODEL=claude-3-5-haiku-latest
-
-# Sin red, para pruebas y demo determinista
-LLM_PROVIDER=mock
-```
-
-No hay lógica duplicada por proveedor: todos usan el mismo prompt, el mismo esquema de salida y el mismo validador.
-
-## Datos y ética
-
-- **CodiEsp** es un corpus público, anonimizado y distribuido con licencia **CC-BY-4.0** por el Barcelona Supercomputing Center (BSC). Citación:
-
-  > Miranda-Escalada, A., Gonzalez-Agirre, A., Armengol-Estapé, J., & Krallinger, M. (2020). *Overview of automatic clinical coding: annotations, guidelines, and solutions for non-English clinical cases at CodiEsp track of CLEF eHealth 2020*. CLEF eHealth 2020.
-
-- El catálogo y el corpus se descargan de Zenodo con verificación SHA-256. Los datos crudos no se versionan.
-- Los **40 casos ficticios** se crearán en la Fase 2 y serán inventados para evaluar negación, abreviaturas y typos; no corresponderán a pacientes reales.
-- Este prototipo es académico y **no** debe usarse para facturación, decisiones clínicas ni tratamiento de datos identificables.
-
-## Documentación
-
-- [`docs/CRISP-ML.md`](docs/CRISP-ML.md): las seis fases y su aseguramiento de calidad.
-- [`docs/ESTADO.md`](docs/ESTADO.md): decisiones, pendientes y resultados.
-- [`docs/registro_modelos.md`](docs/registro_modelos.md): modelo usado por fase y rendimiento.
-- [`docs/arquitectura.md`](docs/arquitectura.md): arquitectura y diagrama.
-- [`docs/auditoria_datos.md`](docs/auditoria_datos.md): auditoría reproducible de CodiEsp.
-- [`docs/PLAN.md`](docs/PLAN.md): plan integral y cronograma.
+- `docs/CRISP-ML.md`
+- `docs/ESTADO.md`
+- `docs/arquitectura.md`
+- `docs/auditoria_datos.md`
+- `docs/registro_modelos.md`
 
 ## Licencia
 
-Código del proyecto: MIT (ver `LICENSE`). Datos de CodiEsp: CC-BY-4.0 (ver `THIRD_PARTY_NOTICES.md`).
+- Código: MIT
+- Datos de CodiEsp: CC-BY-4.0
+
+## Nota importante
+
+Este prototipo es académico y debe usarse solo para investigación y validación. No debe emplearse para facturación ni decisiones clínicas definitivas sin supervisión humana.
+

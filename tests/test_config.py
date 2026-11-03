@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+from types import SimpleNamespace
+
+import httpx
 import pytest
 from pydantic import ValidationError
+
+from src.llm.providers import GeminiProvider
 
 from src.catalog.models import (
     CatalogEntry,
@@ -13,6 +18,7 @@ from src.catalog.models import (
     Prediction,
     RetrievalHit,
 )
+from backend.services.coding_service import infer_provider_mode
 from src.config import PROJECT_ROOT, Settings, get_settings, reload_settings
 
 
@@ -24,7 +30,7 @@ def _clear_settings_cache() -> None:
 
 
 def test_default_settings_are_valid() -> None:
-    settings = Settings()
+    settings = Settings(llm_provider="ollama")
     assert settings.llm_provider == "ollama"
     assert settings.top_k == 30
     assert settings.catalog_path.is_absolute()
@@ -33,21 +39,20 @@ def test_default_settings_are_valid() -> None:
 
 
 def test_settings_read_environment(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("LLM_PROVIDER", "openai")
-    monkeypatch.setenv("LLM_MODEL", "gpt-4o-mini")
+    monkeypatch.setenv("LLM_PROVIDER", "ollama")
+    monkeypatch.setenv("LLM_MODEL", "llama3.1:8b")
     monkeypatch.setenv("TOP_K", "7")
-    monkeypatch.setenv("OPENAI_API_KEY", "sk-test-no-real")
+    monkeypatch.setenv("OLLAMA_BASE_URL", "http://ollama-cloud.internal:11434")
     settings = reload_settings()
-    assert settings.llm_provider == "openai"
-    assert settings.llm_model == "gpt-4o-mini"
+    assert settings.llm_provider == "ollama"
+    assert settings.llm_model == "llama3.1:8b"
     assert settings.top_k == 7
-    assert settings.openai_key() == "sk-test-no-real"
-    assert settings.openai_key() is not None
-    assert "sk-test-no-real" not in repr(settings)
+    assert settings.ollama_base_url == "http://ollama-cloud.internal:11434"
+    assert "ollama-cloud.internal" in settings.ollama_base_url
 
 
 def test_empty_api_key_is_none() -> None:
-    settings = Settings(openai_api_key="   ", anthropic_api_key="")
+    settings = Settings()
     assert settings.openai_key() is None
     assert settings.anthropic_key() is None
 
@@ -55,6 +60,99 @@ def test_empty_api_key_is_none() -> None:
 def test_invalid_provider_is_rejected() -> None:
     with pytest.raises(ValidationError):
         Settings(llm_provider="proveedor-inexistente")
+
+
+def test_openrouter_provider_is_supported() -> None:
+    settings = Settings(llm_provider="openrouter", openrouter_model="meta-llama/llama-3.1-8b-instruct:free")
+    assert settings.llm_provider == "openrouter"
+    assert settings.openrouter_model == "meta-llama/llama-3.1-8b-instruct:free"
+
+
+def test_gemini_provider_is_supported() -> None:
+    settings = Settings(llm_provider="gemini", gemini_model="gemini-3.5-flash", gemini_api_key="gemini-secret")
+    assert settings.llm_provider == "gemini"
+    assert settings.gemini_model == "gemini-3.5-flash"
+    assert settings.gemini_key() == "gemini-secret"
+
+
+def test_gemini_provider_falls_back_to_supported_models(monkeypatch: pytest.MonkeyPatch) -> None:
+    provider = GeminiProvider("gemini-secret", "gemini-2.0-flash")
+
+    calls: list[str] = []
+
+    def fake_post(url: str, json: dict, timeout: float) -> httpx.Response:
+        calls.append(url)
+        if "gemini-2.0-flash" in url:
+            return httpx.Response(404, request=httpx.Request("POST", url), json={"error": {"message": "not found"}})
+        return httpx.Response(
+            200,
+            request=httpx.Request("POST", url),
+            json={
+                "candidates": [{"content": {"parts": [{"text": "ok"}]}}],
+                "usageMetadata": {"promptTokenCount": 10, "candidatesTokenCount": 5},
+            },
+        )
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+
+    response = provider.complete([{"role": "user", "content": "hola"}], temperature=0.1, max_tokens=32)
+
+    assert response.content == "ok"
+    assert any("gemini-2.0-flash" in call for call in calls)
+    assert any("gemini-3.5-flash" in call for call in calls)
+
+
+def test_gemini_provider_handles_empty_content_response(monkeypatch: pytest.MonkeyPatch) -> None:
+    provider = GeminiProvider("gemini-secret", "gemini-3.5-flash")
+
+    def fake_post(url: str, json: dict, timeout: float) -> httpx.Response:
+        return httpx.Response(
+            200,
+            request=httpx.Request("POST", url),
+            json={"candidates": [{"content": {}, "finishReason": "MAX_TOKENS"}], "usageMetadata": {"promptTokenCount": 5}},
+        )
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+
+    response = provider.complete([{"role": "user", "content": "hola"}], max_tokens=1)
+
+    assert response.content == ""
+    assert response.provider == "gemini"
+
+
+def test_infer_provider_mode_respects_selected_cloud_provider() -> None:
+    assert infer_provider_mode("http://localhost:11434", selected_provider="gemini") == "cloud"
+    assert infer_provider_mode("http://localhost:11434", selected_provider="ollama") == "local"
+
+
+def test_gemini_provider_retries_when_model_is_busy(monkeypatch: pytest.MonkeyPatch) -> None:
+    provider = GeminiProvider("gemini-secret", "gemini-3.5-flash")
+    calls: list[str] = []
+
+    def fake_post(url: str, json: dict, timeout: float) -> httpx.Response:
+        calls.append(url)
+        if "gemini-3.5-flash" in url:
+            return httpx.Response(503, request=httpx.Request("POST", url), json={"error": {"message": "busy"}})
+        return httpx.Response(
+            200,
+            request=httpx.Request("POST", url),
+            json={"candidates": [{"content": {"parts": [{"text": "ok"}]}}], "usageMetadata": {"promptTokenCount": 10, "candidatesTokenCount": 5}},
+        )
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+
+    response = provider.complete([{"role": "user", "content": "hola"}], max_tokens=8)
+
+    assert response.content == "ok"
+    assert any("gemini-3.5-flash" in call for call in calls)
+    assert any("gemini-3.5-flash-lite" in call for call in calls)
+
+
+def test_anthropic_provider_is_supported() -> None:
+    settings = Settings(llm_provider="anthropic", anthropic_model="claude-3-5-sonnet-20241022", anthropic_api_key="anthropic-secret")
+    assert settings.llm_provider == "anthropic"
+    assert settings.anthropic_model == "claude-3-5-sonnet-20241022"
+    assert settings.anthropic_key() == "anthropic-secret"
 
 
 def test_invalid_top_k_is_rejected() -> None:

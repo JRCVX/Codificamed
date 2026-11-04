@@ -57,6 +57,11 @@ Thumbs.db
 .agents/
 .claude/
 
+# --- documentación extra / archivos académicos locales ---
+docs/
+enunciado_de_actividad_complementaria_de_pln.md
+pront.txt
+
 # --- documentos locales no necesarios para el repositorio ---
 docs/casos_ficticios.md
 
